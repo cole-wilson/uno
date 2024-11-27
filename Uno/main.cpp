@@ -1,10 +1,19 @@
 #include "Game.h"
 
+#include "Server.h"
+
 #include <SFML/Graphics.hpp>
+#include <SFML/Network.hpp>
+
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(2048, 1024), "UNO");
+    Server host;
+    Server client(host.get_join_code());
+    std::cout << host.get_join_code() << " " << host.get_player_id() << std::endl;
+    std::cout << client.get_join_code() << " " << client.get_player_id() << std::endl;
+
+    /*sf::RenderWindow window(sf::VideoMode(1024, 512), "UNO");
     
     Game game;
 
@@ -19,7 +28,7 @@ int main()
 
         window.clear();
         window.display();
-    }
+    }*/
 
     return 0;
 }

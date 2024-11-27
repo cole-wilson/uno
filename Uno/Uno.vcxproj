@@ -140,6 +140,7 @@
     <ClCompile Include="NetworkedPlayer.cpp" />
     <ClCompile Include="NumberCard.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Server.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActionCard.h" />
@@ -148,6 +149,7 @@
     <ClInclude Include="NetworkedPlayer.h" />
     <ClInclude Include="NumberCard.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Server.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />

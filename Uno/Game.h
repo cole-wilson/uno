@@ -7,7 +7,7 @@
 using std::vector;
 
 class Game {
-	vector<Card> deck;
+	vector<Card> drawpile;
 	vector<Card> discard;
 	vector<Player> players;
 
