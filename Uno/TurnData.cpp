@@ -5,38 +5,30 @@ TurnData::TurnData(string data)
 	//Server.split_message();
 	vector<string> tokens = Server::split_message(data);
 
-	this->turn_action = (TURN_ACTION)std::stoi(tokens.at(0));
+	this->cards_drawn = std::stoi(tokens.at(0));
+	this->cards_in_hand = std::stoi(tokens.at(1));
+	this->next_player = std::stoi(tokens.at(2));
+	this->direction = std::stoi(tokens.at(3));
 
-	this->next_player = std::stoi(tokens.at(1));
-
-	if (this->turn_action == PASS || this->turn_action == DRAW_PASS) {
+	if (tokens.at(3) == "no_card") {
 		this->card = nullptr;
 	}
 	else {
-		this->card = card_from_string(tokens.at(2));
+		this->card = card_from_string(tokens.at(4));
 	}
-	
-	this->uno = tokens.at(3) == "uno";
-
 }
 
-TurnData::TurnData(TURN_ACTION t_action, int next_player, bool uno) {
-	this->turn_action = t_action;
+TurnData::TurnData(int cards_drawn, int cards_in_hand, int next_player, int direction, Card* card) {
+	this->cards_drawn = cards_drawn;
+	this->cards_in_hand = cards_in_hand;
 	this->next_player = next_player;
-	this->uno = uno;
-	this->card = nullptr;
-}
-
-TurnData::TurnData(TURN_ACTION t_action, int next_player, Card* card, bool Uno) {
-	this->turn_action = t_action;
-	this->next_player = next_player;
-	this->uno = uno;
+	this->direction = direction;
 	this->card = card;
 }
 
-bool TurnData::is_uno()
+int TurnData::get_cards_drawn()
 {
-	return this->uno;
+	return this->cards_drawn;
 }
 
 int TurnData::get_next_player()
@@ -44,23 +36,35 @@ int TurnData::get_next_player()
 	return this->next_player;
 }
 
+int TurnData::get_cards_in_hand()
+{
+	return this->cards_in_hand;
+}
+
+int TurnData::get_direction()
+{
+	return this->direction;
+}
+
 Card* TurnData::get_card()
 {
 	return this->card;
 }
 
-TURN_ACTION TurnData::get_turn_action()
-{
-	return this->turn_action;
-}
 
 string TurnData::to_string()
 {
 	string output;
-	output += std::to_string(get_turn_action()) + '\n';
+	output += std::to_string(get_cards_drawn()) + '\n';
+	output += std::to_string(get_cards_in_hand()) + '\n';
 	output += std::to_string(get_next_player()) + '\n';
-	output += (*card).to_string() + '\n';
-	output += uno ? "uno" : "no-uno-yet";
+	output += std::to_string(get_direction()) + '\n';
+	if (this->card == nullptr) {
+		output += "no_card" + '\n';
+	}
+	else {
+		output += (*card).to_string() + '\n';
+	}
 	return output;
 }
 

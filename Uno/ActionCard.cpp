@@ -16,3 +16,8 @@ CARD_ACTION ActionCard::get_action() const
 {
     return this->action;
 }
+
+CARD_TYPE ActionCard::get_type() const
+{
+    return ACTION;
+}

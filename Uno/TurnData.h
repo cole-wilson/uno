@@ -4,35 +4,28 @@
 #include "ActionCard.h"
 #include "Server.h"
 
-
 #include <vector>
 
 using std::string;
 using std::vector;
 
-enum TURN_ACTION {
-	DRAW_PASS = 0,
-	DRAW_PLAY = 1,
-	PASS = 2,
-	PLAY = 3,
-	WIN = 4
-};
 
 class TurnData {
-	TURN_ACTION turn_action;
+	int cards_drawn;
+	int cards_in_hand;
 	int next_player;
+	int direction;
 	Card* card;
-	bool uno;
 
 public:
 	TurnData(std::string data);
-	TurnData(TURN_ACTION t_action, int next_player, bool uno);
-	TurnData(TURN_ACTION t_action, int next_player, Card* card, bool Uno);
+	TurnData(int cards_drawn, int cards_in_hand, int next_player, int direction, Card* card);
 
-	bool is_uno();
+	int get_cards_drawn();
 	int get_next_player();
+	int get_cards_in_hand();
+	int get_direction();
 	Card* get_card();
-	TURN_ACTION get_turn_action();
 
 	string to_string();
 

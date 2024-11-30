@@ -13,3 +13,8 @@ std::string NumberCard::to_string() const {
 int NumberCard::get_number() const {
 	return this->number;
 }
+
+CARD_TYPE NumberCard::get_type() const
+{
+	return NUMBER;
+}

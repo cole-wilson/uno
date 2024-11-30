@@ -12,12 +12,28 @@ Card* Deck::draw_one_card()
     return card;
 }
 
+Card* Deck::draw_one_card(int index)
+{
+    Card* card = cards.at(index);
+    cards.erase(cards.begin() + index);
+    return card;
+}
+
+void Deck::burn_one_card() {
+    cards.pop_back();
+}
+
 Card* Deck::read_face_up() {
     return cards.front();
 }
 
 void Deck::put_face_up(Card* card) {
     cards.push_front(card);
+}
+
+int Deck::size() const
+{
+    return this->cards.size();
 }
 
 Deck::Deck(std::string data) {
@@ -48,6 +64,6 @@ void Deck::clear_from_string(std::string data) {
     this->cards.clear();
     std::vector<std::string> card_strs = Server::split_message(data, ',');
     for (std::string card_str : card_strs) {
-        this->put_face_up(TurnData::card_from_string(card_str));
+        this->cards.push_back(TurnData::card_from_string(card_str));
     }
 }

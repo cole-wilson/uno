@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Card.h"
-#include "Player.h"
 #include "Server.h"
 #include "TurnData.h"
 
@@ -23,8 +22,13 @@ public:
 
 	deque<Card*> get_all_cards();
 	Card* draw_one_card();
+	Card* draw_one_card(int index);
+	void burn_one_card();
 	Card* read_face_up();
 	void put_face_up(Card* card);
+
+	int size() const;
+	
 
 	std::string to_string();
 

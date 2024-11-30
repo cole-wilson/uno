@@ -7,7 +7,13 @@ enum CARD_COLOR {
 	GREEN = 'G',
 	RED = 'R',
 	YELLOW = 'Y',
-	WILD = 'W'
+	WILD_CARD = 'W'
+};
+
+enum CARD_TYPE {
+	NUMBER = 0,
+	ACTION = 1,
+	NONE = 2
 };
 
 class ActionCard;
@@ -19,5 +25,6 @@ protected:
 public:
 	CARD_COLOR get_color() const;
 	virtual std::string to_string() const;
+	virtual CARD_TYPE get_type() const;
 };
 
