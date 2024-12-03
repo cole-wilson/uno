@@ -34,20 +34,23 @@ void Game::mainloop() {
                 }
             }
             std::cout << "HAND: " << hand.to_string() << std::endl;
-            std::cout << "\tchoose index to play: ";
-            int cardindex;
-            std::cin >> cardindex;
+            //std::cout << "\tchoose index to play: ";
 
-            card_played = hand.draw_one_card(cardindex);
+            mode = SELECTING_CARD;
+            wait_select();
+
+            card_played = hand.draw_one_card(handindex);
             next_player = (turn + direction) % n_players;
 
             if (card_played->get_type() == ACTION) {
                 CARD_ACTION action_type = dynamic_cast<ActionCard*>(card_played)->get_action();
                 if (card_played->get_color() == WILD_CARD) {
-                    char chosen_color;
                     std::cout << "\tchoose wild card color: ";
-                    std::cin >> chosen_color;
-                    card_played = new ActionCard((CARD_COLOR)chosen_color, action_type);
+                    mode = SELECTING_WILD_COLOR;
+                    wait_select();
+                    CARD_COLOR colors[] = { RED, GREEN, BLUE, YELLOW };
+                    CARD_COLOR chosen_color_enum = colors[chosen_color];
+                    card_played = new ActionCard(chosen_color_enum, action_type);
                 }
                 if (action_type == SKIP) {
                     next_player = (turn + (direction * 2)) % n_players;
@@ -68,6 +71,7 @@ void Game::mainloop() {
         }
         else {
             // wait for someone elses turn
+            mode = WAITING_FOR_OTHER_PLAYER;
             bool win = false;
             TurnData turndata(serv.recv());
 
@@ -93,4 +97,20 @@ void Game::mainloop() {
         }
         std::cout << std::endl << std::endl << std::endl;
     }
+}
+
+// https://stackoverflow.com/questions/26903602/an-enclosing-function-local-variable-cannot-be-referenced-in-a-lambda-body-unles
+// https://medium.com/@billchen2k/using-c-conditional-variables-for-thread-synchronization-87fb1ac3601c
+void Game::release_select() {
+    std::unique_lock<std::mutex> lck(select_mtx);
+    select_has_selected = true;
+    select_cv.notify_one();
+}
+void Game::wait_select() {
+    std::cout << "waiting..." << std::endl;
+    std::unique_lock<std::mutex> lck(select_mtx);
+    select_cv.wait(lck, [&] {
+        return select_has_selected;
+        });
+    select_has_selected = false;
 }
