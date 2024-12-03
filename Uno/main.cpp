@@ -9,6 +9,7 @@
 #include <SFML/Network.hpp>
 
 #include <thread>
+#include <math.h>
 
 
 int main() {
@@ -66,11 +67,54 @@ int main() {
             // "close requested" event: we close the window
             if (event.type == sf::Event::Closed)
                 window.close();
+            else if (event.type == sf::Event::KeyPressed)
+            {
+                if (event.key.scancode == sf::Keyboard::Scan::Left && game.mode == SELECTING_CARD) {
+                    game.handindex = std::max(0, game.handindex - 1);
+                }
+                else if (event.key.scancode == sf::Keyboard::Scan::Right && game.mode == SELECTING_CARD) {
+                    game.handindex = std::min(game.hand.size() - 1, game.handindex + 1);
+                }
+                else if (event.key.scancode == sf::Keyboard::Scan::Space && game.mode == SELECTING_CARD) {
+                    game.release_select();
+                }
+                else if (event.key.scancode == sf::Keyboard::Scan::Left && game.mode == SELECTING_WILD_COLOR) {
+                    game.chosen_color = std::max(0, game.chosen_color - 1);
+                }
+                else if (event.key.scancode == sf::Keyboard::Scan::Right && game.mode == SELECTING_WILD_COLOR) {
+                    game.chosen_color = std::min(3, game.chosen_color + 1);
+                }
+                else if (event.key.scancode == sf::Keyboard::Scan::Space && game.mode == SELECTING_WILD_COLOR) {
+                    game.release_select();
+                }
+            }
         }
 
         // clear the window with black color
         window.clear(sf::Color::Black);
         window.draw(*game.discardpile.read_face_up());
+
+        for (int i = 0; i < game.hand.size(); i++) {
+            if (i != game.handindex && game.mode == SELECTING_CARD) {
+                Card card = *game.hand.get_all_cards().at(i);
+                card.setPosition(i * 40, 500);
+                window.draw(card);
+            }
+        }
+        if (game.mode == SELECTING_CARD) {
+            Card selectedcard = *game.hand.get_all_cards().at(game.handindex);
+            selectedcard.setPosition(game.handindex * 40, 400);
+            window.draw(selectedcard);
+        }
+
+        if (game.mode == SELECTING_WILD_COLOR) {
+            sf::RectangleShape color(sf::Vector2f(500, 500));
+            sf::Color colors[] = { sf::Color::Red, sf::Color::Green, sf::Color::Blue, sf::Color::Yellow };
+            color.setFillColor(colors[game.chosen_color]);
+            color.setPosition(250, 250);
+            window.draw(color);
+        }
+
 
         // end the current frame
         window.display();
