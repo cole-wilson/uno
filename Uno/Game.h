@@ -20,7 +20,7 @@ public:
     int n_players = -1;
     int turn = 0;
     int direction = 1;
-    int handindex = 0;
+    int handindex = 6;
 
     GAME_MODE mode = JOIN_MENU;
     int chosen_color = 0;

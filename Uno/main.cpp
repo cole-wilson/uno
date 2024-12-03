@@ -17,40 +17,12 @@
 int main() {
     Game game;
 
+    game.drawpile.shuffle();
 
-    //drawpile.shuffle();
-
-
-        // create the window
-        sf::RenderWindow window(sf::VideoMode(1000, 1000), "Start Game");
+    // create the window
+    sf::RenderWindow window(sf::VideoMode(2000, 1500), "UNO");
         
-        Menu menu(window.getSize().x, window.getSize().y);
-
-
-    // host or join
-    /*std::string host = "";
-    std::cout << "y to host:";
-    std::cin >> host;
-
-    if (host== "y") {
-        game.serv.new_game();
-        std::cout << game.serv.get_join_code() << std::endl;
-        std::cout << "enter to start...";
-        std::cin >> host;
-        game.serv.send("start");
-        game.n_players = std::stoi(game.serv.recv());
-        std::cout << game.n_players << std::endl;
-        game.serv.send(game.drawpile.to_string());
-    }
-    else {
-        std::string code;
-        game.serv.join_game(code);
-        int id = game.serv.get_player_id();
-        std::cout << "player id: " << id << std::endl;
-        game.n_players = std::stoi(game.serv.recv());
-        std::cout << game.n_players << std::endl;
-        game.drawpile.clear_from_string(game.serv.recv());
-    }*/
+    Menu menu(window.getSize().x, window.getSize().y);
 
     game.discardpile.put_face_up(game.drawpile.draw_one_card());
 
@@ -62,9 +34,6 @@ int main() {
     for (int i = 0; i < 7; i++) {
         game.hand.put_face_up(game.drawpile.draw_one_card());
     }
-
-    // create the window
-
 
     //https://stackoverflow.com/questions/49509687/passing-an-entire-class-as-argument-to-a-thread-c-as-in-c-sharp
     std::thread gamethread;
@@ -116,7 +85,8 @@ int main() {
                 }
                 else if (event.key.code == sf::Keyboard::Return && menu.menu_state == JOIN_STATE)
                 {
-                    //game.serv.join_game(ENTERD);
+                    game.serv.join_game("DEBUG"); // should be the thingy the user typed
+                    gamethread = std::thread(&Game::mainloop, &game);
                 }
             
             }
@@ -149,19 +119,29 @@ int main() {
             menu.draw(window);
         }
         else {
-            window.draw(*game.discardpile.read_face_up());
+            Card discard_card = *game.discardpile.read_face_up();
+            discard_card.setPosition(200 + (window.getSize().x / 2), window.getSize().y / 2)
+            window.draw();
 
-            for (int i = 0; i < game.hand.size(); i++) {
+            for (int i = 0; i <= game.handindex; i++) {
                 if (i != game.handindex && game.mode == SELECTING_CARD) {
                     Card card = *game.hand.get_all_cards().at(i);
-                    card.setPosition(i * 40, 500);
+                    card.setPosition(i * 70, 500);
                     window.draw(card);
                 }
             }
+            for (int i = game.hand.size() - 1; i > game.handindex; i--) {
+                if (i != game.handindex && game.mode == SELECTING_CARD) {
+                    Card card = *game.hand.get_all_cards().at(i);
+                    card.setPosition(i * 70, 500);
+                    window.draw(card);
+                }
+            }
+
         }
         if (game.mode == SELECTING_CARD) {
             Card selectedcard = *game.hand.get_all_cards().at(game.handindex);
-            selectedcard.setPosition(game.handindex * 40, 400);
+            selectedcard.setPosition(game.handindex * 70, 470);
             window.draw(selectedcard);
         }
 
@@ -177,7 +157,7 @@ int main() {
         // end the current frame
         window.display();
     }
-   // gamethread.join();
+    gamethread.join();
 
     return 0;
 }

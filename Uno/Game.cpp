@@ -4,6 +4,11 @@ Game::Game() : drawpile("B0,B1,B1,B2,B2,B3,B3,B4,B4,B5,B5,B6,B6,B7,B7,B8,B8,B9,B
 }
 
 void Game::mainloop() {
+    if (serv.get_player_id() != 0) {
+        n_players = std::stoi(serv.recv());
+        std::cout << n_players << std::endl;
+        drawpile.clear_from_string(serv.recv());
+    }
     while (true) {
         Card* tomatch = discardpile.read_face_up();
 
