@@ -159,9 +159,6 @@
   <ItemGroup>
     <Text Include="deck.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Font Include="..\x64\Debug\helvetica.ttf" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

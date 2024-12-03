@@ -35,39 +35,41 @@ int main() {
                 // "close requested" event: we close the window
                 if (event.type == sf::Event::Closed)
                     window.close();
-            }
 
-            // clear the window with black color
-            window.clear(sf::Color::Black);
-
-            
-            switch (event.type)
-            {
-            case sf::Event::KeyReleased:
-                switch (event.key.code)
+                switch (event.type)
                 {
-                case sf::Keyboard::Up:
-                    menu.MoveUp();
-                    break;
-                case sf::Keyboard::Down:
-                    menu.MoveDown();
-                    break;
-                case sf::Keyboard::Return:
-                    switch (menu.PressedItem())
+                case sf::Event::KeyReleased:
+                    switch (event.key.code)
                     {
-                    case 0:
-                        std::cout << "Host" << std::endl;
+                    case sf::Keyboard::Up:
+                        menu.MoveUp();
                         break;
-                    case 1:
-                        std::cout << "Join" << std::endl;
+                    case sf::Keyboard::Down:
+                        menu.MoveDown();
                         break;
-                    case 2:
-                        window.close();
+                    case sf::Keyboard::Return:
+                        switch (menu.PressedItem())
+                        {
+                        case 0:
+                            std::cout << "Host" << std::endl;
+                            break;
+                        case 1:
+                            std::cout << "Join" << std::endl;
+                            break;
+                        case 2:
+                            window.close();
+                            break;
+                        }
                         break;
                     }
                     break;
                 }
             }
+
+            // clear the window with black color
+            //window.clear(sf::Color::Black);
+
+            
             window.clear();
             menu.draw(window);
             window.display();
@@ -117,7 +119,7 @@ int main() {
     //https://stackoverflow.com/questions/49509687/passing-an-entire-class-as-argument-to-a-thread-c-as-in-c-sharp
     std::thread gamethread(&Game::mainloop, &game);
 
-    sf::RenderWindow window(sf::VideoMode(1000, 1000), "My window");
+    
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event))

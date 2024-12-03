@@ -39,7 +39,9 @@ void Menu::draw(sf::RenderWindow& window)
 
 void Menu::MoveUp()
 {
-	if (selectedItem - 1 >= 0)
+	std::cout << "Inside Moveup" << std::endl;
+
+	if ((selectedItem - 1) >= 0)
 	{
 		menu[selectedItem].setFillColor(sf::Color::Red);
 		selectedItem--;
@@ -49,7 +51,9 @@ void Menu::MoveUp()
 
 void Menu::MoveDown()
 {
-	if (selectedItem + 1 < NUMBER_MENU_OPTIONS)
+	std::cout << "Inside Movedown" << std::endl;
+
+	if ((selectedItem + 1) < NUMBER_MENU_OPTIONS)
 	{
 		menu[selectedItem].setFillColor(sf::Color::Red);
 		selectedItem++;
