@@ -79,6 +79,32 @@ int main() {
             // "close requested" event: we close the window
             if (event.type == sf::Event::Closed)
                 window.close();
+            else if (event.type == sf::Event::KeyPressed && game.mode == JOIN_MENU)
+            {
+                switch (event.key.code)
+                {
+                case sf::Keyboard::Up:
+                    menu.MoveUp();
+                    break;
+                case sf::Keyboard::Down:
+                    menu.MoveDown();
+                    break;
+                case sf::Keyboard::Return:
+                    switch (menu.PressedItem())
+                    {
+                    case 0:
+                        std::cout << "Host" << std::endl;
+                        break;
+                    case 1:
+                        std::cout << "Join" << std::endl;
+                        break;
+                    case 2:
+                        window.close();
+                        break;
+                    }
+                    break;
+                }
+            }
             else if (event.type == sf::Event::KeyPressed)
             {
                 if (event.key.scancode == sf::Keyboard::Scan::Left && game.mode == SELECTING_CARD) {
