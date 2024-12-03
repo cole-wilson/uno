@@ -3,6 +3,8 @@
 NumberCard::NumberCard(const CARD_COLOR color, int number) {
 	this->number = number;
 	this->color = color;
+
+	load_texture();
 }
 
 std::string NumberCard::to_string() const {

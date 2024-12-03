@@ -3,6 +3,8 @@
 ActionCard::ActionCard(const CARD_COLOR color, CARD_ACTION action) {
     this->color = color;
     this->action = action;
+
+    load_texture();
 }
 
 std::string ActionCard::to_string() const

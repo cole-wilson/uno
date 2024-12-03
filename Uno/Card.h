@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <SFML/Graphics.hpp>
 
 enum CARD_COLOR {
 	BLUE = 'B',
@@ -19,9 +20,12 @@ enum CARD_TYPE {
 class ActionCard;
 class NumberCard;
 
-class Card {
+class Card : public sf::Sprite {
+	sf::Texture texture;
+
 protected:
 	CARD_COLOR color;
+	void load_texture();
 public:
 	CARD_COLOR get_color() const;
 	virtual std::string to_string() const;
