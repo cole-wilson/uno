@@ -7,7 +7,8 @@
 enum GAME_MODE {
     SELECTING_CARD = 0,
     SELECTING_WILD_COLOR = 1,
-    WAITING_FOR_OTHER_PLAYER = 2
+    WAITING_FOR_OTHER_PLAYER = 2,
+    JOIN_MENU = 3
 };
 
 class Game {
@@ -21,7 +22,7 @@ public:
     int direction = 1;
     int handindex = 0;
 
-    GAME_MODE mode = SELECTING_CARD;
+    GAME_MODE mode = JOIN_MENU;
     int chosen_color = 0;
 
     std::mutex select_mtx;
