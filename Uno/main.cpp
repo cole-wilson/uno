@@ -1,6 +1,8 @@
 #include "Deck.h"
 #include "NumberCard.h"
 #include "ActionCard.h"
+#include "Menu.h"
+#include <iostream>
 
 #include "Server.h"
 
@@ -23,7 +25,9 @@ int main()
 
 
         // create the window
-        sf::RenderWindow window(sf::VideoMode(1000, 1000), "My window");
+        sf::RenderWindow window(sf::VideoMode(1000, 1000), "Start Game");
+        
+        Menu menu(window.getSize().x, window.getSize().y);
 
         // run the program as long as the window is open
         while (window.isOpen())
@@ -40,14 +44,36 @@ int main()
             // clear the window with black color
             window.clear(sf::Color::Black);
 
-            // draw everything here...
-            for (int i = 0; i < 5; i++) {
-                Card c = *drawpile.get_all_cards().at(i);
-                c.setPosition(i*40, 0);
-                window.draw(c);
+            
+            switch (event.type)
+            {
+            case sf::Event::KeyReleased:
+                switch (event.key.code)
+                {
+                case sf::Keyboard::Up:
+                    menu.MoveUp();
+                    break;
+                case sf::Keyboard::Down:
+                    menu.MoveDown();
+                    break;
+                case sf::Keyboard::Return:
+                    switch (menu.PressedItem())
+                    {
+                    case 0:
+                        std::cout << "Host" << std::endl;
+                        break;
+                    case 1:
+                        std::cout << "Join" << std::endl;
+                        break;
+                    case 2:
+                        window.close();
+                        break;
+                    }
+                    break;
+                }
             }
-
-            // end the current frame
+            window.clear();
+            menu.draw(window);
             window.display();
         }
 
