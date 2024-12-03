@@ -10,3 +10,5 @@ Cole Wilson & Shane Ganz
 
 ## Code Overview
 ...
+
+&copy; Cole Wilson and Shane Ganz 2024
