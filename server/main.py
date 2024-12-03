@@ -16,9 +16,13 @@ index_html = open("./index.html").read().replace("{{MARKDOWN}}", markdown2.markd
 deploy_time = datetime.datetime.now()
 index_html = index_html.replace("TIME", f"last deploy at: {deploy_time.isoformat()}, # games: ACTIVE_GAMES")
 
+hits = 0
+
 @webserver.route("/")
 def info_page():
-    return index_html.replace("ACTIVE_GAMES", str(len(games.keys())) + ", uptime: " + str(datetime.datetime.now() - deploy_time))
+    global hits
+    hits += 1
+    return index_html.replace("ACTIVE_GAMES", str(len(games.keys())) + ", uptime: " + str(datetime.datetime.now() - deploy_time) + ", pageviews: " + str(hits))
 
 games = {}
 
