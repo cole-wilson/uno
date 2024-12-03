@@ -35,6 +35,8 @@ int main() {
     otherplayers.setFont(helvetica);
     otherplayers.setFillColor(sf::Color::White);
     otherplayers.setPosition(1000, 0);
+
+    std::string codeInput;
     
 
     // create the window
@@ -65,9 +67,10 @@ int main() {
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
-            else if (event.type == sf::Event::TextEntered && game.mode == MENU && JOIN_STATE)
+            else if (event.type == sf::Event::TextEntered && game.mode == MENU && menu.menu_state == JOIN_STATE && event.key.code != sf::Keyboard::BackSpace)
             {
-
+                codeInput += event.text.unicode;
+                menu.CodeStore(game, codeInput);
             }
             else if (event.type == sf::Event::KeyPressed && game.mode == MENU)
             {
@@ -103,8 +106,14 @@ int main() {
                 }
                 else if (event.key.code == sf::Keyboard::Return && menu.menu_state == JOIN_STATE)
                 {
-                    game.serv.join_game("DEBUG"); // should be the thingy the user typed
+                    game.serv.join_game(codeInput); // should be the thingy the user typed
                     gamethread = std::thread(&Game::mainloop, &game);
+                }
+                else if (event.key.code == sf::Keyboard::Backspace && menu.menu_state == JOIN_STATE)
+                {
+                    codeInput = codeInput.substr(0, codeInput.size() - 1);
+                    std::cout << codeInput << std::endl;
+                    menu.CodeStore(game, codeInput);
                 }
             
             }

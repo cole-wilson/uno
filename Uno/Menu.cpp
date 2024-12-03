@@ -30,7 +30,6 @@ Menu::Menu(float width, float height)
 
 	joinmessage.setFont(font);
 	joinmessage.setFillColor(sf::Color::Yellow);
-	joinmessage.setString("Input code: ");
 	joinmessage.setPosition(sf::Vector2f(width / 2, height / (NUMBER_MENU_OPTIONS + 1) * 2));
 
 	selectedItem = 0;
@@ -86,5 +85,13 @@ void Menu::HostPressed(Game& game)
 	menu_state = HOST_STATE;
 	hostmessage.setString("Join Code: " + game.serv.get_join_code() + " \nPress enter when ready...");
 }
+
+void Menu::CodeStore(Game& game, string codeInput)
+{
+	joinmessage.setString("Enter code:\n" + codeInput + "\nPress enter when ready...");
+}
+
+
+
 
 //nmethod adds to empty string
