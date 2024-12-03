@@ -60,7 +60,7 @@ string TurnData::to_string()
 	output += std::to_string(get_next_player()) + '\n';
 	output += std::to_string(get_direction()) + '\n';
 	if (this->card == nullptr) {
-		output += "no_card" + '\n';
+		output += "no_card\n";
 	}
 	else {
 		output += (*card).to_string() + '\n';

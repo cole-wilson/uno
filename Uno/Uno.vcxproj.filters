@@ -39,6 +39,9 @@
     <ClCompile Include="Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.h">
@@ -62,6 +65,9 @@
     <ClInclude Include="Menu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md">
@@ -69,12 +75,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="deck.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="..\x64\Debug\helvetica.ttf">
+    <Font Include="helvetica.ttf">
       <Filter>Resource Files</Filter>
     </Font>
   </ItemGroup>

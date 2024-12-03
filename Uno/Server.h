@@ -10,6 +10,8 @@
 #include <vector>
 #include <SFML/Network.hpp>
 
+class Deck;
+
 using std::string;
 using std::vector;
 
@@ -26,6 +28,7 @@ public:
 	std::string recv();
 
 	void new_game();
+	int start_game(std::string drawpilestring);
 	void join_game(std::string join_code);
 
 	int get_player_id() const;

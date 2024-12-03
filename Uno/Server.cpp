@@ -26,6 +26,14 @@ void Server::new_game() {
     this->player_id = 0;
 }
 
+int Server::start_game(std::string drawpilestring)
+{
+    send("start");
+    int n_players = std::stoi(recv());
+    send(drawpilestring);
+    return n_players;
+}
+
 void Server::join_game(std::string join_code) {
     send(join_code);
     this->join_code = join_code;

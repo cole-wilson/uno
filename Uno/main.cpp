@@ -17,10 +17,28 @@
 int main() {
     Game game;
 
-    game.drawpile.shuffle();
+    sf::Texture cardback_texture;
+    if (!cardback_texture.loadFromFile("cards/back.png")) {}
+    sf::Sprite drawpile_sprite(cardback_texture);
+
+    sf::Font helvetica;
+    if (!helvetica.loadFromFile("helvetica.ttf")) {
+        std::cerr << "Font error..." << std::endl;
+    }
+    sf::Text mainmessage;
+    mainmessage.setFont(helvetica);
+    mainmessage.setFillColor(sf::Color::White);
+    mainmessage.setCharacterSize(60);
+    mainmessage.setPosition(0, 470);
+
+    sf::Text otherplayers;
+    otherplayers.setFont(helvetica);
+    otherplayers.setFillColor(sf::Color::White);
+    otherplayers.setPosition(1000, 0);
+    
 
     // create the window
-    sf::RenderWindow window(sf::VideoMode(2000, 1500), "UNO");
+    sf::RenderWindow window(sf::VideoMode(1000, 1000), "UNO");
         
     Menu menu(window.getSize().x, window.getSize().y);
 
@@ -44,13 +62,14 @@ int main() {
         while (window.pollEvent(event))
         {
             // "close requested" event: we close the window
-            if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed) {
                 window.close();
-            else if (event.type == sf::Event::TextEntered && game.mode == JOIN_MENU && JOIN_STATE)
+            }
+            else if (event.type == sf::Event::TextEntered && game.mode == MENU && JOIN_STATE)
             {
 
             }
-            else if (event.type == sf::Event::KeyPressed && game.mode == JOIN_MENU)
+            else if (event.type == sf::Event::KeyPressed && game.mode == MENU)
             {
                 if (event.key.code == sf::Keyboard::Up && menu.menu_state == INITIAL_STATE)
                 {
@@ -78,9 +97,8 @@ int main() {
                 }
                 else if (event.key.code == sf::Keyboard::Return && menu.menu_state == HOST_STATE)
                 {
-                    game.serv.send("start");
-                    game.n_players = std::stoi(game.serv.recv());
-                    game.serv.send(game.drawpile.to_string());
+                    game.drawpile.shuffle();
+                    game.n_players = game.serv.start_game(game.drawpile.to_string());
                     gamethread = std::thread(&Game::mainloop, &game);
                 }
                 else if (event.key.code == sf::Keyboard::Return && menu.menu_state == JOIN_STATE)
@@ -98,61 +116,127 @@ int main() {
                 else if (event.key.scancode == sf::Keyboard::Scan::Right && game.mode == SELECTING_CARD) {
                     game.handindex = std::min(game.hand.size() - 1, game.handindex + 1);
                 }
-                else if (event.key.scancode == sf::Keyboard::Scan::Space && game.mode == SELECTING_CARD) {
+                else if ((event.key.scancode == sf::Keyboard::Scan::Space || event.key.scancode == sf::Keyboard::Scan::Enter) && game.mode == SELECTING_CARD) {
                     game.release_select();
                 }
+                else if ((event.key.scancode == sf::Keyboard::Scan::D) && game.mode == SELECTING_CARD) {
+                    game.handindex = -1;
+                    game.release_select();
+                }
+                /*else if ((event.key.scancode == sf::Keyboard::Scan::P) && game.mode == SELECTING_CARD) {
+                    game.handindex = -2;
+                    game.release_select();
+                }*/
                 else if (event.key.scancode == sf::Keyboard::Scan::Left && game.mode == SELECTING_WILD_COLOR) {
                     game.chosen_color = std::max(0, game.chosen_color - 1);
                 }
                 else if (event.key.scancode == sf::Keyboard::Scan::Right && game.mode == SELECTING_WILD_COLOR) {
                     game.chosen_color = std::min(3, game.chosen_color + 1);
                 }
-                else if (event.key.scancode == sf::Keyboard::Scan::Space && game.mode == SELECTING_WILD_COLOR) {
+                else if ((event.key.scancode == sf::Keyboard::Scan::Space || event.key.scancode == sf::Keyboard::Scan::Enter) && game.mode == SELECTING_WILD_COLOR) {
                     game.release_select();
+                }
+            }
+            else if (event.type == sf::Event::MouseMoved || event.type == sf::Event::MouseButtonPressed)
+            {
+                int mx = event.type == sf::Event::MouseMoved ? event.mouseMove.x : event.mouseButton.x;
+                int my = event.type == sf::Event::MouseMoved ? event.mouseMove.y : event.mouseButton.y;
+
+                for (int i = -1; i < (int)game.hand.get_all_cards().size(); i++) {
+                    sf::FloatRect cardbox;
+                    
+                    if (i < 0) {
+                        cardbox = drawpile_sprite.getGlobalBounds();
+                        std::cout << "a" << std::endl;
+                    }
+                    else {
+                        Card* card = game.hand.get_all_cards().at(i);
+                        cardbox = card->getGlobalBounds();
+                    }
+
+                    int rightbound = cardbox.left + 70;
+                    if (i == game.handindex || i == game.hand.get_all_cards().size() - 1 || i == -1) {
+                        rightbound = cardbox.left + cardbox.width;
+;                   }
+
+                    bool in_x = mx > cardbox.left && mx < rightbound;
+                    bool in_y = my > cardbox.top && my < cardbox.top + cardbox.height;
+
+                    if (in_x && in_y) {
+                        game.handindex = i;
+                        if (event.type == sf::Event::MouseButtonPressed && game.mode == SELECTING_CARD && event.mouseButton.button == sf::Mouse::Left) {
+                            game.release_select();
+                        }
+                        break;
+                    }
                 }
             }
         }
 
         // clear the window with black color
         window.clear(sf::Color::Black);
-        if (game.mode == JOIN_MENU) {
+        if (game.mode == MENU) {
             menu.draw(window);
+            mainmessage.setString("");
         }
         else {
+            std::string oplayer_text;
+            for (int i = 0; i < game.n_players; i++) {
+                oplayer_text += "Player " + std::to_string(i) + ": " + std::to_string(game.n_cards[i]) + " cards\n";
+            }
+            otherplayers.setString(oplayer_text);
+            window.draw(otherplayers);
+
+
             Card discard_card = *game.discardpile.read_face_up();
-            discard_card.setPosition(200 + (window.getSize().x / 2), window.getSize().y / 2)
-            window.draw();
+            discard_card.setPosition(240, 0);
+            window.draw(discard_card);
+            window.draw(drawpile_sprite);
 
-            for (int i = 0; i <= game.handindex; i++) {
+            for (int i = 0; i < game.hand.size(); i++) {
                 if (i != game.handindex && game.mode == SELECTING_CARD) {
-                    Card card = *game.hand.get_all_cards().at(i);
-                    card.setPosition(i * 70, 500);
-                    window.draw(card);
+                    Card* card = game.hand.get_all_cards().at(i);
+                    card->setPosition(i * 70, window.getSize().y - 360);
+                    window.draw(*card);
                 }
             }
-            for (int i = game.hand.size() - 1; i > game.handindex; i--) {
-                if (i != game.handindex && game.mode == SELECTING_CARD) {
-                    Card card = *game.hand.get_all_cards().at(i);
-                    card.setPosition(i * 70, 500);
-                    window.draw(card);
-                }
-            }
-
         }
         if (game.mode == SELECTING_CARD) {
-            Card selectedcard = *game.hand.get_all_cards().at(game.handindex);
-            selectedcard.setPosition(game.handindex * 70, 470);
-            window.draw(selectedcard);
+            mainmessage.setString("Select a Card To Play:");
+            int cardindex = std::max(0, game.handindex);
+            Card* selectedcard = game.hand.get_all_cards().at(cardindex);
+            selectedcard->setPosition(cardindex * 70, window.getSize().y - 400);
+            window.draw(*selectedcard);
+        }
+        else if (game.mode == WAITING_FOR_OTHER_PLAYER) {
+            mainmessage.setString("Waiting for Player " + std::to_string(game.turn) + "...");
         }
 
         if (game.mode == SELECTING_WILD_COLOR) {
-            sf::RectangleShape color(sf::Vector2f(500, 500));
+            mainmessage.setString("Choose Wild Card Color: (arrow keys)");
             sf::Color colors[] = { sf::Color::Red, sf::Color::Green, sf::Color::Blue, sf::Color::Yellow };
-            color.setFillColor(colors[game.chosen_color]);
-            color.setPosition(250, 250);
-            window.draw(color);
+
+            sf::RectangleShape m_color(sf::Vector2f(1000, 250));
+            m_color.setFillColor(colors[game.chosen_color]);
+            m_color.setPosition(0, 750);
+            window.draw(m_color);
+
+            if (game.chosen_color > 0) {
+                sf::RectangleShape l_color(sf::Vector2f(20, 250));
+                l_color.setFillColor(colors[game.chosen_color - 1]);
+                l_color.setPosition(0, 750);
+                window.draw(l_color);
+            }
+
+            if (game.chosen_color < 3) {
+                sf::RectangleShape r_color(sf::Vector2f(20, 250));
+                r_color.setFillColor(colors[game.chosen_color + 1]);
+                r_color.setPosition(980, 750);
+                window.draw(r_color);
+            }
         }
 
+        window.draw(mainmessage);
 
         // end the current frame
         window.display();

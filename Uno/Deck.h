@@ -20,7 +20,7 @@ public:
 
 	void shuffle();
 
-	deque<Card*> get_all_cards();
+	deque<Card*>& get_all_cards();
 	Card* draw_one_card();
 	Card* draw_one_card(int index);
 	void burn_one_card();

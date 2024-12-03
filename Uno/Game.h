@@ -8,12 +8,13 @@ enum GAME_MODE {
     SELECTING_CARD = 0,
     SELECTING_WILD_COLOR = 1,
     WAITING_FOR_OTHER_PLAYER = 2,
-    JOIN_MENU = 3
+    MENU = 3
 };
 
 class Game {
 public:
     Game();
+
     Deck drawpile;
     Deck discardpile;
     Deck hand;
@@ -22,7 +23,9 @@ public:
     int direction = 1;
     int handindex = 6;
 
-    GAME_MODE mode = JOIN_MENU;
+    int* n_cards;
+
+    GAME_MODE mode = MENU;
     int chosen_color = 0;
 
     std::mutex select_mtx;

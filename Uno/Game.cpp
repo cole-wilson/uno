@@ -6,16 +6,19 @@ Game::Game() : drawpile("B0,B1,B1,B2,B2,B3,B3,B4,B4,B5,B5,B6,B6,B7,B7,B8,B8,B9,B
 void Game::mainloop() {
     if (serv.get_player_id() != 0) {
         n_players = std::stoi(serv.recv());
-        std::cout << n_players << std::endl;
+        //std::cout << n_players << std::endl;
         drawpile.clear_from_string(serv.recv());
     }
+
+    n_cards = new int[n_players];
+    for (int i = 0; i < n_players; i++) {
+        n_cards[i] = 7;
+    }
+
     while (true) {
         Card* tomatch = discardpile.read_face_up();
 
         if (turn < 0) turn += n_players;
-
-        std::cout << "turn: " << turn << "\tdirection: " << direction << std::endl;
-        std::cout << "TO MATCH: " << tomatch->to_string() << std::endl;
 
         if (turn == serv.get_player_id()) {
             // do my turn
@@ -38,19 +41,55 @@ void Game::mainloop() {
                     hand.put_face_up(drawpile.draw_one_card());
                 }
             }
-            std::cout << "HAND: " << hand.to_string() << std::endl;
+            //std::cout << "HAND: " << hand.to_string() << std::endl;
             //std::cout << "\tchoose index to play: ";
 
             mode = SELECTING_CARD;
-            wait_select();
+            int n_draws = 0;
+            while (true) {
+                wait_select();
 
-            card_played = hand.draw_one_card(handindex);
+                Card* potential_card;
+
+                if (handindex == -1) {
+                    if (++n_draws == 2) {
+                        break;
+                    }
+
+                    potential_card = drawpile.draw_one_card();
+                    hand.put_face_up(potential_card);
+                }
+                else {
+                    potential_card = hand.get_all_cards().at(handindex);
+                }
+
+                //std::cout << potential_card->get_color() << " --- " << tomatch->get_color() << std::endl;
+
+                bool color_okay = potential_card->get_color() == tomatch->get_color() || potential_card->get_color() == WILD_CARD;
+                bool type_num_okay = false;
+                if (potential_card->get_type() == ACTION && tomatch->get_type() == ACTION) {
+                    CARD_ACTION pot_action = dynamic_cast<ActionCard*>(potential_card)->get_action();
+                    CARD_ACTION match_action = dynamic_cast<ActionCard*>(tomatch)->get_action();
+                    type_num_okay = pot_action == match_action;
+                }
+                else if (potential_card->get_type() == NUMBER && tomatch->get_type() == NUMBER) {
+                    int pot_num = dynamic_cast<NumberCard*>(potential_card)->get_number();
+                    int match_num = dynamic_cast<NumberCard*>(tomatch)->get_number();
+                    type_num_okay = pot_num == match_num;
+                }
+                //std::cout << color_okay << " " << type_num_okay << std::endl;
+                if (color_okay || type_num_okay || handindex == -1) {
+                    break;
+                }
+            }
+
+            card_played = handindex < 0 ? nullptr : hand.draw_one_card(handindex--);
             next_player = (turn + direction) % n_players;
 
-            if (card_played->get_type() == ACTION) {
+            if (card_played != nullptr && card_played->get_type() == ACTION) {
                 CARD_ACTION action_type = dynamic_cast<ActionCard*>(card_played)->get_action();
                 if (card_played->get_color() == WILD_CARD) {
-                    std::cout << "\tchoose wild card color: ";
+                    //std::cout << "\tchoose wild card color: ";
                     mode = SELECTING_WILD_COLOR;
                     wait_select();
                     CARD_COLOR colors[] = { RED, GREEN, BLUE, YELLOW };
@@ -66,10 +105,16 @@ void Game::mainloop() {
                 }
             }
 
-            discardpile.put_face_up(card_played);
+            if (card_played != nullptr) {
+                discardpile.put_face_up(card_played);
+                handindex = std::min(handindex, hand.size() - 1);
+            }
+
 
             TurnData turndata(cards_drawn, hand.size(), next_player, direction, card_played);
             serv.send(turndata.to_string());
+
+            this->n_cards[0] = hand.size();
 
             turn = next_player;
 
@@ -97,10 +142,11 @@ void Game::mainloop() {
 
             turn = turndata.get_next_player();
             direction = turndata.get_direction();
+            n_cards[turn] = turndata.get_cards_in_hand();
 
             if (turndata.get_cards_in_hand() == 0) return;
         }
-        std::cout << std::endl << std::endl << std::endl;
+        //std::cout << std::endl << std::endl << std::endl;
     }
 }
 

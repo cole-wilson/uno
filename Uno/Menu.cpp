@@ -6,7 +6,7 @@ Menu::Menu(float width, float height)
 {
 	if (!font.loadFromFile("helvetica.ttf"))
 	{
-		std::cout << "Font error" << std::endl;
+		std::cerr << "Font error" << std::endl;
 	}
 
 	menu[0].setFont(font);
@@ -84,11 +84,7 @@ void Menu::HostPressed(Game& game)
 {
 	game.serv.new_game();
 	menu_state = HOST_STATE;
-	hostmessage.setString(game.serv.get_join_code() + " \n Enter when ready...");
-	//game.serv.send("start");
-	//game.n_players = std::stoi(game.serv.recv());
-	//std::cout << game.n_players << std::endl;
-	//game.serv.send(game.drawpile.to_string());
+	hostmessage.setString("Join Code: " + game.serv.get_join_code() + " \nPress enter when ready...");
 }
 
 //nmethod adds to empty string

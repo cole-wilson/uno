@@ -1,6 +1,6 @@
 #include "Deck.h"
 
-deque<Card*> Deck::get_all_cards()
+deque<Card*>& Deck::get_all_cards()
 {
     return this->cards;
 }
