@@ -135,22 +135,25 @@
   <ItemGroup>
     <ClCompile Include="ActionCard.cpp" />
     <ClCompile Include="Card.cpp" />
-    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Deck.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="NetworkedPlayer.cpp" />
     <ClCompile Include="NumberCard.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Server.cpp" />
+    <ClCompile Include="TurnData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActionCard.h" />
     <ClInclude Include="Card.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="NetworkedPlayer.h" />
+    <ClInclude Include="Deck.h" />
     <ClInclude Include="NumberCard.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="Server.h" />
+    <ClInclude Include="TurnData.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="deck.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
