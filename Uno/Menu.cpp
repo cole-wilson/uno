@@ -1,6 +1,7 @@
 #include "Menu.h"
 #include <iostream>
 
+
 Menu::Menu(float width, float height)
 {
 	if (!font.loadFromFile("helvetica.ttf"))
@@ -31,6 +32,7 @@ Menu::~Menu()
 
 void Menu::draw(sf::RenderWindow& window)
 {
+	std::cout << selectedItem << std::endl;
 	for (int i = 0; i < NUMBER_MENU_OPTIONS; i++)
 	{
 		window.draw(menu[i]);

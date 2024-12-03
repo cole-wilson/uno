@@ -109,7 +109,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Surface\Desktop\SFML-2.6.2-windows-vc17-64-bit\SFML-2.6.2\lib;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Surface\Desktop\SFML-2.6.2-windows-vc17-64-bit\SFML-2.6.2\lib;C:\Users\Cole Wilson\Desktop\SFML-2.6.2-windows-vc17-64-bit\SFML-2.6.2\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;sfml-network.lib;sfml-system.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -128,7 +128,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Surface\Desktop\SFML-2.6.2-windows-vc17-64-bit\SFML-2.6.2\lib;</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Surface\Desktop\SFML-2.6.2-windows-vc17-64-bit\SFML-2.6.2\lib;C:\Users\Cole Wilson\Desktop\SFML-2.6.2-windows-vc17-64-bit\SFML-2.6.2\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;sfml-network.lib;sfml-system.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -160,7 +160,7 @@
     <Text Include="deck.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Font Include="..\x64\Debug\helvetica.ttf" />
+    <Font Include="helvetica.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

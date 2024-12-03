@@ -68,8 +68,8 @@ int main() {
                     }
                     break;
                 }
+                break;
             }
-            window.clear();
             menu.draw(window);
             window.display();
         }
@@ -118,7 +118,6 @@ int main() {
     //https://stackoverflow.com/questions/49509687/passing-an-entire-class-as-argument-to-a-thread-c-as-in-c-sharp
     std::thread gamethread(&Game::mainloop, &game);
 
-    sf::RenderWindow window(sf::VideoMode(1000, 1000), "My window");
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event))
