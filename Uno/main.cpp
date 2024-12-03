@@ -58,8 +58,9 @@ int main() {
     //https://stackoverflow.com/questions/49509687/passing-an-entire-class-as-argument-to-a-thread-c-as-in-c-sharp
     std::thread gamethread;
 
-    
     while (window.isOpen()) {
+        std::cout << codeInput << std::endl;
+
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -67,10 +68,16 @@ int main() {
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
-            else if (event.type == sf::Event::TextEntered && game.mode == MENU && menu.menu_state == JOIN_STATE && event.key.code != sf::Keyboard::BackSpace)
+            else if (event.type == sf::Event::TextEntered && game.mode == MENU && menu.menu_state == JOIN_STATE)
             {
-                codeInput += event.text.unicode;
-                menu.CodeStore(game, codeInput);
+                char c = event.text.unicode;
+                if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
+                    if ((c >= 'a' && c <= 'z')) {
+                        c = (c - 'a') + 'A';
+                    }
+                    codeInput += (char)event.text.unicode;
+                    menu.CodeStore(game, codeInput);
+                }
             }
             else if (event.type == sf::Event::KeyPressed && game.mode == MENU)
             {
@@ -156,7 +163,6 @@ int main() {
                     
                     if (i < 0) {
                         cardbox = drawpile_sprite.getGlobalBounds();
-                        std::cout << "a" << std::endl;
                     }
                     else {
                         Card* card = game.hand.get_all_cards().at(i);
