@@ -2,6 +2,8 @@
 #include "Game.h"
 #include "NumberCard.h"
 #include "ActionCard.h"
+#include "Menu.h"
+#include <iostream>
 
 #include "Server.h"
 
@@ -14,6 +16,63 @@
 
 int main() {
     Game game;
+
+
+    //drawpile.shuffle();
+
+
+        // create the window
+        sf::RenderWindow window(sf::VideoMode(1000, 1000), "Start Game");
+        
+        Menu menu(window.getSize().x, window.getSize().y);
+
+        // run the program as long as the window is open
+        while (window.isOpen())
+        {
+            // check all the window's events that were triggered since the last iteration of the loop
+            sf::Event event;
+            while (window.pollEvent(event))
+            {
+                // "close requested" event: we close the window
+                if (event.type == sf::Event::Closed)
+                    window.close();
+            }
+
+            // clear the window with black color
+            window.clear(sf::Color::Black);
+
+            
+            switch (event.type)
+            {
+            case sf::Event::KeyReleased:
+                switch (event.key.code)
+                {
+                case sf::Keyboard::Up:
+                    menu.MoveUp();
+                    break;
+                case sf::Keyboard::Down:
+                    menu.MoveDown();
+                    break;
+                case sf::Keyboard::Return:
+                    switch (menu.PressedItem())
+                    {
+                    case 0:
+                        std::cout << "Host" << std::endl;
+                        break;
+                    case 1:
+                        std::cout << "Join" << std::endl;
+                        break;
+                    case 2:
+                        window.close();
+                        break;
+                    }
+                    break;
+                }
+            }
+            window.clear();
+            menu.draw(window);
+            window.display();
+        }
 
     // host or join
     std::string host = "";
