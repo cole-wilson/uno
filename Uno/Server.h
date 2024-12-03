@@ -1,7 +1,7 @@
 #pragma once
 
-#define SERVER_ADDRESS "uno.cole.ws"
-//#define SERVER_ADDRESS "mac.net.cole.ws"
+//#define SERVER_ADDRESS "uno.cole.ws"
+#define SERVER_ADDRESS "mac.net.cole.ws"
 #define SERVER_PORT 9999
 
 
