@@ -39,8 +39,8 @@ class UnoTCPHandler(socketserver.BaseRequestHandler):
         print(f"which is `{initial_data}`")
         join_code = None
         if initial_data == "new":
-            # join_code = "".join(random.choices("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", k=6))
-            join_code = "DEBUG"
+            join_code = "".join(random.choices("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", k=6))
+            # join_code = "DEBUG"
             print("code", join_code)
             self.request.sendall(join_code.encode())
             games[join_code] = Game(join_code, self.request)
