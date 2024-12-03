@@ -13,11 +13,12 @@ try:
 except FileNotFoundError:
     markdown = open("../README.md").read()
 index_html = open("./index.html").read().replace("{{MARKDOWN}}", markdown2.markdown(markdown))
-index_html = index_html.replace("TIME", f"last deploy at: {datetime.datetime.now().isoformat()}, # games: ACTIVE_GAMES")
+deploy_time = datetime.datetime.now()
+index_html = index_html.replace("TIME", f"last deploy at: {deploy_time.isoformat()}, # games: ACTIVE_GAMES")
 
 @webserver.route("/")
 def info_page():
-    return index_html.replace("ACTIVE_GAMES", str(len(games.keys())))
+    return index_html.replace("ACTIVE_GAMES", str(len(games.keys())) + ", uptime: " + str(datetime.datetime.now() - deploy_time))
 
 games = {}
 
