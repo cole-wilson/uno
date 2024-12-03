@@ -1,95 +1,9 @@
-#include "Deck.h"
-#include "NumberCard.h"
-#include "ActionCard.h"
+#include "Game.h"
 
-#include "Server.h"
+Game::Game() : drawpile("B0,B1,B1,B2,B2,B3,B3,B4,B4,B5,B5,B6,B6,B7,B7,B8,B8,B9,B9,Bs,Bs,Br,Br,Bd,Bd,G0,G1,G1,G2,G2,G3,G3,G4,G4,G5,G5,G6,G6,G7,G7,G8,G8,G9,G9,Gs,Gs,Gr,Gr,Gd,Gd,R0,R1,R1,R2,R2,R3,R3,R4,R4,R5,R5,R6,R6,R7,R7,R8,R8,R9,R9,Rs,Rs,Rr,Rr,Rd,Rd,Y0,Y1,Y1,Y2,Y2,Y3,Y3,Y4,Y4,Y5,Y5,Y6,Y6,Y7,Y7,Y8,Y8,Y9,Y9,Ys,Ys,Yr,Yr,Yd,Yd,Ww,Ww,Ww,Ww,Wf,Wf,Wf,Wf") {
+}
 
-#include <SFML/Graphics.hpp>
-#include <SFML/Network.hpp>
-
-
-int main()
-{
-    Deck drawpile("B0,B1,B1,B2,B2,B3,B3,B4,B4,B5,B5,B6,B6,B7,B7,B8,B8,B9,B9,Bs,Bs,Br,Br,Bd,Bd,G0,G1,G1,G2,G2,G3,G3,G4,G4,G5,G5,G6,G6,G7,G7,G8,G8,G9,G9,Gs,Gs,Gr,Gr,Gd,Gd,R0,R1,R1,R2,R2,R3,R3,R4,R4,R5,R5,R6,R6,R7,R7,R8,R8,R9,R9,Rs,Rs,Rr,Rr,Rd,Rd,Y0,Y1,Y1,Y2,Y2,Y3,Y3,Y4,Y4,Y5,Y5,Y6,Y6,Y7,Y7,Y8,Y8,Y9,Y9,Ys,Ys,Yr,Yr,Yd,Yd,Ww,Ww,Ww,Ww,Wf,Wf,Wf,Wf");
-    Deck discardpile;
-    Deck hand;
-    int n_players = -1;
-    int turn = 0;
-    int direction = 1;
-
-
-
-    //drawpile.shuffle();
-
-
-        // create the window
-        sf::RenderWindow window(sf::VideoMode(1000, 1000), "My window");
-
-        // run the program as long as the window is open
-        while (window.isOpen())
-        {
-            // check all the window's events that were triggered since the last iteration of the loop
-            sf::Event event;
-            while (window.pollEvent(event))
-            {
-                // "close requested" event: we close the window
-                if (event.type == sf::Event::Closed)
-                    window.close();
-            }
-
-            // clear the window with black color
-            window.clear(sf::Color::Black);
-
-            // draw everything here...
-            for (int i = 0; i < 5; i++) {
-                Card c = *drawpile.get_all_cards().at(i);
-                c.setPosition(i*40, 0);
-                window.draw(c);
-            }
-
-            // end the current frame
-            window.display();
-        }
-
-    // host or join
-    std::string host = "";
-    std::cout << "y to host:";
-    std::cin >> host;
-    Server serv;
-
-    if (host== "y") {
-        serv.new_game();
-        std::cout << serv.get_join_code() << std::endl;
-        std::cout << "enter to start...";
-        std::cin >> host;
-        serv.send("start");
-        n_players = std::stoi(serv.recv());
-        std::cout << n_players << std::endl;
-        serv.send(drawpile.to_string());
-    }
-    else {
-        std::string code;
-        std::cout << "join code: ";
-        std::cin >> code;
-        serv.join_game(code);
-        int id = serv.get_player_id();
-        std::cout << "player id: " << id << std::endl;
-        n_players = std::stoi(serv.recv());
-        std::cout << n_players << std::endl;
-        drawpile.clear_from_string(serv.recv());
-    }
-
-    discardpile.put_face_up(drawpile.draw_one_card());
-
-    for (int pid = 0; pid < serv.get_player_id(); pid++) {
-        for (int cardi = 0; cardi < 7; cardi++) {
-            drawpile.burn_one_card();
-        }
-    }
-    for (int i = 0; i < 7; i++) {
-        hand.put_face_up(drawpile.draw_one_card());
-    }
-
+void Game::mainloop() {
     while (true) {
         Card* tomatch = discardpile.read_face_up();
 
@@ -169,16 +83,14 @@ int main()
             else {
                 //std::cout << "player " << turn << " didn't play a card" << std::endl;
             }
-            
+
             //std::cout << "player " << turn << " has " << turndata.get_cards_in_hand() << " cards" << std::endl;
 
             turn = turndata.get_next_player();
             direction = turndata.get_direction();
-            
-            if (turndata.get_cards_in_hand() == 0) break;
+
+            if (turndata.get_cards_in_hand() == 0) return;
         }
         std::cout << std::endl << std::endl << std::endl;
     }
-
-    return 0;
 }
