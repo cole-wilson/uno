@@ -24,6 +24,15 @@ Menu::Menu(float width, float height)
 	menu[2].setString("Exit");
 	menu[2].setPosition(sf::Vector2f(width / 2, height / (NUMBER_MENU_OPTIONS + 1) * 3));
 
+	hostmessage.setFont(font);
+	hostmessage.setFillColor(sf::Color::Yellow);
+	hostmessage.setPosition(sf::Vector2f(width / 2, height / (NUMBER_MENU_OPTIONS + 1) * 2));
+
+	joinmessage.setFont(font);
+	joinmessage.setFillColor(sf::Color::Yellow);
+	joinmessage.setString("Input code: ");
+	joinmessage.setPosition(sf::Vector2f(width / 2, height / (NUMBER_MENU_OPTIONS + 1) * 2));
+
 	selectedItem = 0;
 }
 
@@ -32,17 +41,27 @@ Menu::~Menu()
 
 void Menu::draw(sf::RenderWindow& window)
 {
-	std::cout << selectedItem << std::endl;
-	for (int i = 0; i < NUMBER_MENU_OPTIONS; i++)
+	switch (menu_state)
 	{
-		window.draw(menu[i]);
+	case INITIAL_STATE:
+		for (int i = 0; i < NUMBER_MENU_OPTIONS; i++)
+		{
+			window.draw(menu[i]);
+		}
+		break;
+	case HOST_STATE:
+		window.draw(hostmessage);
+			break;
+	case JOIN_STATE:
+		window.draw(joinmessage);
+		break;
 	}
+	
+	
 }
 
 void Menu::MoveUp()
 {
-	std::cout << "Inside Moveup" << std::endl;
-
 	if ((selectedItem - 1) >= 0)
 	{
 		menu[selectedItem].setFillColor(sf::Color::Red);
@@ -53,8 +72,6 @@ void Menu::MoveUp()
 
 void Menu::MoveDown()
 {
-	std::cout << "Inside Movedown" << std::endl;
-
 	if ((selectedItem + 1) < NUMBER_MENU_OPTIONS)
 	{
 		menu[selectedItem].setFillColor(sf::Color::Red);
@@ -62,3 +79,16 @@ void Menu::MoveDown()
 		menu[selectedItem].setFillColor(sf::Color::Yellow);
 	}
 }
+
+void Menu::HostPressed(Game& game)
+{
+	game.serv.new_game();
+	menu_state = HOST_STATE;
+	hostmessage.setString(game.serv.get_join_code() + " \n Enter when ready...");
+	//game.serv.send("start");
+	//game.n_players = std::stoi(game.serv.recv());
+	//std::cout << game.n_players << std::endl;
+	//game.serv.send(game.drawpile.to_string());
+}
+
+//nmethod adds to empty string

@@ -28,7 +28,7 @@ int main() {
 
 
     // host or join
-    std::string host = "";
+    /*std::string host = "";
     std::cout << "y to host:";
     std::cin >> host;
 
@@ -44,15 +44,13 @@ int main() {
     }
     else {
         std::string code;
-        std::cout << "join code: ";
-        std::cin >> code;
         game.serv.join_game(code);
         int id = game.serv.get_player_id();
         std::cout << "player id: " << id << std::endl;
         game.n_players = std::stoi(game.serv.recv());
         std::cout << game.n_players << std::endl;
         game.drawpile.clear_from_string(game.serv.recv());
-    }
+    }*/
 
     game.discardpile.put_face_up(game.drawpile.draw_one_card());
 
@@ -69,7 +67,7 @@ int main() {
 
 
     //https://stackoverflow.com/questions/49509687/passing-an-entire-class-as-argument-to-a-thread-c-as-in-c-sharp
-    std::thread gamethread(&Game::mainloop, &game);
+    std::thread gamethread;
 
     
     while (window.isOpen()) {
@@ -79,31 +77,48 @@ int main() {
             // "close requested" event: we close the window
             if (event.type == sf::Event::Closed)
                 window.close();
+            else if (event.type == sf::Event::TextEntered && game.mode == JOIN_MENU && JOIN_STATE)
+            {
+
+            }
             else if (event.type == sf::Event::KeyPressed && game.mode == JOIN_MENU)
             {
-                switch (event.key.code)
+                if (event.key.code == sf::Keyboard::Up && menu.menu_state == INITIAL_STATE)
                 {
-                case sf::Keyboard::Up:
                     menu.MoveUp();
-                    break;
-                case sf::Keyboard::Down:
+                }
+                else if (event.key.code == sf::Keyboard::Down && menu.menu_state == INITIAL_STATE)
+                {
                     menu.MoveDown();
-                    break;
-                case sf::Keyboard::Return:
+                }
+                else if (event.key.code == sf::Keyboard::Return && menu.menu_state == INITIAL_STATE)
+                {
                     switch (menu.PressedItem())
                     {
                     case 0:
-                        std::cout << "Host" << std::endl;
+                        menu.HostPressed(game);
                         break;
                     case 1:
-                        std::cout << "Join" << std::endl;
-                        break;
+                       menu.menu_state = JOIN_STATE;
+                       break;
                     case 2:
                         window.close();
+                        exit(0);
                         break;
                     }
-                    break;
                 }
+                else if (event.key.code == sf::Keyboard::Return && menu.menu_state == HOST_STATE)
+                {
+                    game.serv.send("start");
+                    game.n_players = std::stoi(game.serv.recv());
+                    game.serv.send(game.drawpile.to_string());
+                    gamethread = std::thread(&Game::mainloop, &game);
+                }
+                else if (event.key.code == sf::Keyboard::Return && menu.menu_state == JOIN_STATE)
+                {
+                    //game.serv.join_game(ENTERD);
+                }
+            
             }
             else if (event.type == sf::Event::KeyPressed)
             {
@@ -130,13 +145,18 @@ int main() {
 
         // clear the window with black color
         window.clear(sf::Color::Black);
-        window.draw(*game.discardpile.read_face_up());
+        if (game.mode == JOIN_MENU) {
+            menu.draw(window);
+        }
+        else {
+            window.draw(*game.discardpile.read_face_up());
 
-        for (int i = 0; i < game.hand.size(); i++) {
-            if (i != game.handindex && game.mode == SELECTING_CARD) {
-                Card card = *game.hand.get_all_cards().at(i);
-                card.setPosition(i * 40, 500);
-                window.draw(card);
+            for (int i = 0; i < game.hand.size(); i++) {
+                if (i != game.handindex && game.mode == SELECTING_CARD) {
+                    Card card = *game.hand.get_all_cards().at(i);
+                    card.setPosition(i * 40, 500);
+                    window.draw(card);
+                }
             }
         }
         if (game.mode == SELECTING_CARD) {
@@ -157,7 +177,7 @@ int main() {
         // end the current frame
         window.display();
     }
-    gamethread.join();
+   // gamethread.join();
 
     return 0;
 }
