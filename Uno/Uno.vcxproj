@@ -150,14 +150,83 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="NumberCard.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="TurnData.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
+    <None Include="..\server\index.html" />
+    <None Include="..\server\main.py" />
+    <None Include="embedding.py" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="helvetica.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="cards\B0.png" />
+    <Image Include="cards\B1.png" />
+    <Image Include="cards\B2.png" />
+    <Image Include="cards\B3.png" />
+    <Image Include="cards\B4.png" />
+    <Image Include="cards\B5.png" />
+    <Image Include="cards\B6.png" />
+    <Image Include="cards\B7.png" />
+    <Image Include="cards\B8.png" />
+    <Image Include="cards\B9.png" />
+    <Image Include="cards\back.png" />
+    <Image Include="cards\Bd.png" />
+    <Image Include="cards\Bf.png" />
+    <Image Include="cards\Br.png" />
+    <Image Include="cards\Bs.png" />
+    <Image Include="cards\Bw.png" />
+    <Image Include="cards\G0.png" />
+    <Image Include="cards\G1.png" />
+    <Image Include="cards\G2.png" />
+    <Image Include="cards\G3.png" />
+    <Image Include="cards\G4.png" />
+    <Image Include="cards\G5.png" />
+    <Image Include="cards\G6.png" />
+    <Image Include="cards\G7.png" />
+    <Image Include="cards\G8.png" />
+    <Image Include="cards\G9.png" />
+    <Image Include="cards\Gd.png" />
+    <Image Include="cards\Gf.png" />
+    <Image Include="cards\Gr.png" />
+    <Image Include="cards\Gs.png" />
+    <Image Include="cards\Gw.png" />
+    <Image Include="cards\R0.png" />
+    <Image Include="cards\R1.png" />
+    <Image Include="cards\R2.png" />
+    <Image Include="cards\R3.png" />
+    <Image Include="cards\R4.png" />
+    <Image Include="cards\R5.png" />
+    <Image Include="cards\R6.png" />
+    <Image Include="cards\R7.png" />
+    <Image Include="cards\R8.png" />
+    <Image Include="cards\R9.png" />
+    <Image Include="cards\Rd.png" />
+    <Image Include="cards\Rf.png" />
+    <Image Include="cards\Rr.png" />
+    <Image Include="cards\Rs.png" />
+    <Image Include="cards\Rw.png" />
+    <Image Include="cards\Wf.png" />
+    <Image Include="cards\Ww.png" />
+    <Image Include="cards\Y0.png" />
+    <Image Include="cards\Y1.png" />
+    <Image Include="cards\Y2.png" />
+    <Image Include="cards\Y3.png" />
+    <Image Include="cards\Y4.png" />
+    <Image Include="cards\Y5.png" />
+    <Image Include="cards\Y6.png" />
+    <Image Include="cards\Y7.png" />
+    <Image Include="cards\Y8.png" />
+    <Image Include="cards\Y9.png" />
+    <Image Include="cards\Yd.png" />
+    <Image Include="cards\Yf.png" />
+    <Image Include="cards\Yr.png" />
+    <Image Include="cards\Ys.png" />
+    <Image Include="cards\Yw.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
