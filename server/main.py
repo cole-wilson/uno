@@ -69,10 +69,10 @@ class UnoTCPHandler(socketserver.BaseRequestHandler):
                 games[join_code].players += 1
                 games[join_code].clients.append(self.request)
                 self.request.sendall(f"{player_index}".encode())
-            elif games[join_code].started:
-                self.request.sendall(b"too late")
+            # elif games[join_code].started:
+                # self.request.sendall(b"too late")
             else:
-                self.request.sendall(b"invalid code")
+                self.request.sendall(b"-1")
 
         self.request.settimeout(0.1)
 
