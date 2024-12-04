@@ -19,6 +19,12 @@
     <Filter Include="Resource Files\Resources">
       <UniqueIdentifier>{f89f4150-7d5d-44e1-a62e-e24fb00b9070}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Resources\sounds">
+      <UniqueIdentifier>{27227cfd-03b7-4a5b-9764-f8fc938a1600}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Resources\cards">
+      <UniqueIdentifier>{bbd8b582-96fb-45df-a1ec-9a6f0fe811fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -49,6 +55,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SoundPlayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,6 +92,9 @@
     <ClInclude Include="SoundPlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GraphicsMain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md">
@@ -107,197 +119,208 @@
     </Font>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="cards\B0.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\B1.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\B2.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\B3.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\B4.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\B5.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\B6.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\B7.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\B8.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\B9.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\back.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Bd.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Bf.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Br.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Bs.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Bw.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\G0.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\G1.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\G2.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\G3.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\G4.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\G5.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\G6.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\G7.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\G8.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\G9.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Gd.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Gf.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Gr.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Gs.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Gw.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\R0.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\R1.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\R2.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\R3.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\R4.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\R5.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\R6.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\R7.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\R8.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\R9.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Rd.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Rf.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Rr.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Rs.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Rw.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Wf.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Ww.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Y0.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Y1.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Y2.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Y3.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Y4.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Y5.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Y6.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Y7.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Y8.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Y9.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Yd.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Yf.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Yr.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Ys.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
-    <Image Include="cards\Yw.png">
-      <Filter>Resource Files\Resources</Filter>
-    </Image>
     <Image Include="unologo.png">
       <Filter>Resource Files\Resources</Filter>
     </Image>
+    <Image Include="cards\B0.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\B1.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\B2.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\B3.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\B4.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\B5.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\B6.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\B7.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\B8.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\B9.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\back.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Bd.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Bf.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Br.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Bs.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Bw.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\G0.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\G1.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\G2.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\G3.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\G4.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\G5.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\G6.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\G7.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\G8.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\G9.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Gd.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Gf.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Gr.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Gs.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Gw.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\R0.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\R1.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\R2.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\R3.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\R4.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\R5.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\R6.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\R7.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\R8.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\R9.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Rd.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Rf.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Rr.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Rs.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Rw.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Wf.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Ww.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Y0.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Y1.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Y2.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Y3.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Y4.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Y5.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Y6.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Y7.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Y8.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Y9.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Yd.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Yf.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Yr.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Ys.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="cards\Yw.png">
+      <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="sounds\card.wav">
+      <Filter>Resource Files\Resources\sounds</Filter>
+    </Media>
+    <Media Include="sounds\click.wav">
+      <Filter>Resource Files\Resources\sounds</Filter>
+    </Media>
+    <Media Include="sounds\uno.wav">
+      <Filter>Resource Files\Resources\sounds</Filter>
+    </Media>
   </ItemGroup>
 </Project>
