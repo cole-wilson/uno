@@ -1,68 +1,91 @@
 #include "GraphicsMain.h"
 
-GraphicsMain::GraphicsMain() {
+GraphicsMain::GraphicsMain() 
+{
+    //
     uno_sound = new SoundPlayer("sounds/uno.wav");
     click_sound = new SoundPlayer("sounds/click.wav");
     card_sound = new SoundPlayer("sounds/card.wav");
-    uno_sound->play();
+    uno_sound->play(); //startup sound
 
-
-    if (!cardback_texture.loadFromFile("cards/back.png")) {}
+    //ensuring cards and font are loaded from file
+    if (!cardback_texture.loadFromFile("cards/back.png")) { 
+        std::cerr << "Card error..." << std::endl;
+    }
     drawpile_sprite = sf::Sprite(cardback_texture);
 
     if (!helvetica.loadFromFile("helvetica.ttf")) {
         std::cerr << "Font error..." << std::endl;
     }
 
+    //creating the text for the main gameplay. This will prompt the user for actions
     mainmessage.setFont(helvetica);
     mainmessage.setFillColor(sf::Color::Yellow);
     mainmessage.setCharacterSize(60);
     mainmessage.setPosition(0, 470);
     mainmessage.setStyle(sf::Text::Bold);
 
+    //this will show the other players in the game and the number of cards in their hands
     otherplayers.setFont(helvetica);
     otherplayers.setFillColor(sf::Color::Black);
     otherplayers.setPosition(500, 0);
     otherplayers.setStyle(sf::Text::Bold);
 
-    background_color = sf::Color(222, 113, 17);
+    //creates the custom color for the background
+    background_color = sf::Color(181, 43, 18); 
 }
 
 void GraphicsMain::run()
 {
-    sf::RenderWindow window(sf::VideoMode(1000, 1000), "UNO");
-    Menu menu(window.getSize().x, window.getSize().y);
-    sf::Event event;
-
-    while (window.isOpen()) {
+    //creates the window object and specifies its size
+    sf::RenderWindow window(sf::VideoMode(1000, 1000), "UNO"); 
+    // creates the menu object based on the size of the window
+    Menu menu(window.getSize().x, window.getSize().y); 
+    //event object, currently empty
+    sf::Event event; 
+    
+    //central event loop for all the graphics and inputs, most of the game is this
+    while (window.isOpen()) 
+    {
+        //
         if (game.drawpile.size() == 1) {
             game.drawpile.clear_from_string(game.discardpile.to_string());
             game.discardpile.clear_from_string("B0,B0");
             game.discardpile.put_face_up(game.drawpile.draw_one_card());
         }
-
+        
+        //checking for events
         while (window.pollEvent(event)) {
             // "close requested" event: we close the window
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
+            //"Text entered" event, only relevant if we're in join submenu (MENU && JOIN_STATE)
             else if (event.type == sf::Event::TextEntered && game.mode == MENU && menu.menu_state == JOIN_STATE)
             {
-                click_sound->play();
+                //typing sounds
+                click_sound->play(); 
 
+                //gets the character the user entered this loop
                 char c = event.text.unicode;
-                if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
+                //checks if the character is a number or letter
+                if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) 
+                {
+                    //changes lowercase alphabet to uppercase, as the codes only have uppercase characters
                     if ((c >= 'a' && c <= 'z')) {
                         c = (c - 'a') + 'A';
                     }
-                    codeInput += c;
-                    menu.CodeStore(game, codeInput);
+                    codeInput += c; //adds the currently entered characters to the codeInput string
+                    menu.CodeStore(game, codeInput); //stores the current codeInput, where it will be later drawn in menu.draw because of the current JOIN_STATE
                 }
             }
+            //all other key presses
             else if (event.type == sf::Event::KeyPressed && game.mode == MENU)
             {
-                click_sound->play();
+                //sfx
+                click_sound->play(); 
 
+                //if the user selects up or down and they're on the main menu, run the appropriate functions of menu
                 if (event.key.code == sf::Keyboard::Up && menu.menu_state == INITIAL_STATE)
                 {
                     menu.MoveUp();
@@ -71,6 +94,7 @@ void GraphicsMain::run()
                 {
                     menu.MoveDown();
                 }
+                //or if they choose return, then figure out what they pressed return on
                 else if (event.key.code == sf::Keyboard::Return && menu.menu_state == INITIAL_STATE)
                 {
                     switch (menu.PressedItem())
@@ -78,20 +102,26 @@ void GraphicsMain::run()
                     case 0:
                         menu.HostPressed(game);
                         break;
+                        //updates state and runs codestore for the first time, even though codeInput is empty, to print the instructions to the screen
                     case 1:
                         menu.menu_state = JOIN_STATE;
                         menu.CodeStore(game, codeInput);
                         break;
+                        //exit
                     case 2:
                         window.close();
                         exit(0);
                         break;
                     }
                 }
+                //If the user is within the host sub-menu and they hit enter to begin the game
                 else if (event.key.code == sf::Keyboard::Return && menu.menu_state == HOST_STATE)
                 {
+                    //shuffles the deck
                     game.drawpile.shuffle();
+                    //
                     game.n_players = game.serv.start_game(game.drawpile.to_string());
+                    //
                     gamethread = std::thread(&Game::mainloop, &game);
                 }
                 else if (event.key.code == sf::Keyboard::Return && menu.menu_state == JOIN_STATE)
@@ -204,7 +234,7 @@ void GraphicsMain::run()
         else
         {
             // main game screen
-            window.clear(sf::Color::Red);
+            window.clear(background_color);
 
             std::string oplayer_text;
             for (int i = 0; i < game.n_players; i++) {
