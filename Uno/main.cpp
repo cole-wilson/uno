@@ -64,7 +64,7 @@ int main() {
                     if ((c >= 'a' && c <= 'z')) {
                         c = (c - 'a') + 'A';
                     }
-                    codeInput += (char)event.text.unicode;
+                    codeInput += c;
                     menu.CodeStore(game, codeInput);
                 }
             }
