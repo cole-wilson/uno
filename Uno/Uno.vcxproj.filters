@@ -290,5 +290,8 @@
     <Image Include="cards\Yw.png">
       <Filter>Resource Files\Resources</Filter>
     </Image>
+    <Image Include="unologo.png">
+      <Filter>Resource Files\Resources</Filter>
+    </Image>
   </ItemGroup>
 </Project>

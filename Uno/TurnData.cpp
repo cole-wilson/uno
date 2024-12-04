@@ -10,7 +10,7 @@ TurnData::TurnData(string data)
 	this->next_player = std::stoi(tokens.at(2));
 	this->direction = std::stoi(tokens.at(3));
 
-	if (tokens.at(3) == "nocard") {
+	if (tokens.at(3) == "no") {
 		this->card = nullptr;
 	}
 	else {
@@ -60,7 +60,7 @@ string TurnData::to_string()
 	output += std::to_string(get_next_player()) + '\n';
 	output += std::to_string(get_direction()) + '\n';
 	if (this->card == nullptr) {
-		output += "nocard\n";
+		output += "no\n";
 	}
 	else {
 		output += (*card).to_string() + '\n';

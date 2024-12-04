@@ -15,7 +15,7 @@ CARD_TYPE Card::get_type() const
 }
 
 void Card::load_texture() {
-	if (to_string() != "nocard") {
+	if (to_string() != "no") {
 		std::string filepath = "cards/" + to_string() + ".png";
 		if (!texture.loadFromFile(filepath))
 		{
