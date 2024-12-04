@@ -35,6 +35,8 @@ int main() {
     otherplayers.setFont(helvetica);
     otherplayers.setFillColor(sf::Color::White);
     otherplayers.setPosition(1000, 0);
+
+    std::string codeInput;
     
 
     // create the window
@@ -56,8 +58,9 @@ int main() {
     //https://stackoverflow.com/questions/49509687/passing-an-entire-class-as-argument-to-a-thread-c-as-in-c-sharp
     std::thread gamethread;
 
-    
     while (window.isOpen()) {
+        std::cout << codeInput << std::endl;
+
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -65,9 +68,16 @@ int main() {
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
-            else if (event.type == sf::Event::TextEntered && game.mode == MENU && JOIN_STATE)
+            else if (event.type == sf::Event::TextEntered && game.mode == MENU && menu.menu_state == JOIN_STATE)
             {
-
+                char c = event.text.unicode;
+                if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
+                    if ((c >= 'a' && c <= 'z')) {
+                        c = (c - 'a') + 'A';
+                    }
+                    codeInput += (char)event.text.unicode;
+                    menu.CodeStore(game, codeInput);
+                }
             }
             else if (event.type == sf::Event::KeyPressed && game.mode == MENU)
             {
@@ -103,8 +113,14 @@ int main() {
                 }
                 else if (event.key.code == sf::Keyboard::Return && menu.menu_state == JOIN_STATE)
                 {
-                    game.serv.join_game("DEBUG"); // should be the thingy the user typed
+                    game.serv.join_game(codeInput); // should be the thingy the user typed
                     gamethread = std::thread(&Game::mainloop, &game);
+                }
+                else if (event.key.code == sf::Keyboard::Backspace && menu.menu_state == JOIN_STATE)
+                {
+                    codeInput = codeInput.substr(0, codeInput.size() - 1);
+                    std::cout << codeInput << std::endl;
+                    menu.CodeStore(game, codeInput);
                 }
             
             }
@@ -147,7 +163,6 @@ int main() {
                     
                     if (i < 0) {
                         cardbox = drawpile_sprite.getGlobalBounds();
-                        std::cout << "a" << std::endl;
                     }
                     else {
                         Card* card = game.hand.get_all_cards().at(i);

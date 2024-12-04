@@ -25,10 +25,9 @@ public:
 	void MoveDown();
 	int PressedItem() { return selectedItem; }
 	void HostPressed(Game& game);
+	void CodeStore(Game& game, string code);
 
 private:
-
-//joincode
 	int selectedItem;
 	sf::Font font;
 	sf::Text menu[NUMBER_MENU_OPTIONS];
