@@ -27,16 +27,20 @@ int main() {
 
     sf::Text mainmessage;
     mainmessage.setFont(helvetica);
-    mainmessage.setFillColor(sf::Color::White);
+    mainmessage.setFillColor(sf::Color::Yellow);
     mainmessage.setCharacterSize(60);
     mainmessage.setPosition(0, 470);
+    mainmessage.setStyle(sf::Text::Bold);
 
     sf::Text otherplayers;
     otherplayers.setFont(helvetica);
-    otherplayers.setFillColor(sf::Color::White);
+    otherplayers.setFillColor(sf::Color::Black);
     otherplayers.setPosition(500, 0);
+    otherplayers.setStyle(sf::Text::Bold);
 
     std::string codeInput;
+
+    sf::Color background_color(222, 113, 17);
     
 
     // create the window
@@ -194,7 +198,16 @@ int main() {
         }
 
         // clear the window with black color
-        window.clear(sf::Color::Black);
+        if (game.mode == MENU)
+        {
+            window.clear(sf::Color::Black);
+        }
+        else
+        {
+            window.clear(sf::Color::Red);
+        }
+        
+
         if (game.mode == MENU) {
             menu.draw(window);
             mainmessage.setString("");
