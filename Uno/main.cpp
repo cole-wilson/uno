@@ -144,7 +144,7 @@ int main() {
             }
             else if (event.type == sf::Event::KeyPressed)
             {
-                click_sound.play();
+                card_sound.play();
 
                 if (event.key.scancode == sf::Keyboard::Scan::Left && game.mode == SELECTING_CARD) {
                     game.handindex = std::max(0, game.handindex - 1);
@@ -200,7 +200,7 @@ int main() {
 
                     if (in_x && in_y) {
                         if (game.handindex != i) {
-                            click_sound.play();
+                            card_sound.play();
                         }
                         game.handindex = i;
                         if (event.type == sf::Event::MouseButtonPressed && game.mode == SELECTING_CARD && event.mouseButton.button == sf::Mouse::Left) {

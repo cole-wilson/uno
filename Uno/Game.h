@@ -9,7 +9,8 @@ enum GAME_MODE {
     SELECTING_CARD = 0,
     SELECTING_WILD_COLOR = 1,
     WAITING_FOR_OTHER_PLAYERS = 2,
-    MENU = 3
+    MENU = 3,
+    WIN = 4
 };
 
 class Game {
