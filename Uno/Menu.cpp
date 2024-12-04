@@ -37,6 +37,11 @@ Menu::Menu(float width, float height)
 	joinmessage.setPosition(sf::Vector2f(width / 2, height / (NUMBER_MENU_OPTIONS + 1) * 2));
 	joinmessage.setStyle(sf::Text::Bold);
 
+	waitingmessage.setFont(font);
+	waitingmessage.setFillColor(sf::Color::Yellow);
+	waitingmessage.setPosition(sf::Vector2f(width / 2, height / (NUMBER_MENU_OPTIONS + 1) * 2));
+	waitingmessage.setStyle(sf::Text::Bold);
+
 	selectedItem = 0;
 }
 
