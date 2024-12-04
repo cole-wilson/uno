@@ -104,7 +104,7 @@ int main() {
                 else if (event.key.code == sf::Keyboard::Return && menu.menu_state == JOIN_STATE)
                 {                
                     bool success = game.serv.join_game(codeInput); // should be the thingy the user typed
-                    if (success = true)
+                    if (success)
                     {
                         gamethread = std::thread(&Game::mainloop, &game);
                         menu.menu_state = WAITING_STATE;
