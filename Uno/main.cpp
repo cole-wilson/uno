@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include "Server.h"
+#include "SoundPlayer.h"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
@@ -15,8 +16,10 @@
 
 int main() {
     Game game;
-
-    game.uno_thread();
+    
+    SoundPlayer uno_sound("uno.wav");
+    SoundPlayer click_sound("click.wav");
+    uno_sound.play();
 
     sf::Texture cardback_texture;
     if (!cardback_texture.loadFromFile("cards/back.png")) {}
@@ -71,6 +74,8 @@ int main() {
             }
             else if (event.type == sf::Event::TextEntered && game.mode == MENU && menu.menu_state == JOIN_STATE)
             {
+                click_sound.play();
+
                 char c = event.text.unicode;
                 if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
                     if ((c >= 'a' && c <= 'z')) {
@@ -82,6 +87,8 @@ int main() {
             }
             else if (event.type == sf::Event::KeyPressed && game.mode == MENU)
             {
+                click_sound.play();
+
                 if (event.key.code == sf::Keyboard::Up && menu.menu_state == INITIAL_STATE)
                 {
                     menu.MoveUp();
@@ -136,6 +143,8 @@ int main() {
             }
             else if (event.type == sf::Event::KeyPressed)
             {
+                click_sound.play();
+
                 if (event.key.scancode == sf::Keyboard::Scan::Left && game.mode == SELECTING_CARD) {
                     game.handindex = std::max(0, game.handindex - 1);
                 }
@@ -189,6 +198,9 @@ int main() {
                     bool in_y = my > cardbox.top && my < cardbox.top + cardbox.height;
 
                     if (in_x && in_y) {
+                        if (game.handindex != i) {
+                            click_sound.play();
+                        }
                         game.handindex = i;
                         if (event.type == sf::Event::MouseButtonPressed && game.mode == SELECTING_CARD && event.mouseButton.button == sf::Mouse::Left) {
                             game.release_select();
@@ -238,7 +250,7 @@ int main() {
             }
         }
         if (game.mode == SELECTING_CARD || game.mode == WAITING_FOR_OTHER_PLAYERS) {
-            mainmessage.setString("Select a Card To Play:\n(d to draw)");
+            mainmessage.setString("Select a Card To Play:\n(D to Draw)");
             int cardindex = std::max(0, game.handindex);
             Card* selectedcard = game.hand.get_all_cards().at(cardindex);
             selectedcard->setPosition(cardindex * 70, window.getSize().y - 400);
