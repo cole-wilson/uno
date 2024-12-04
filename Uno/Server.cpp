@@ -34,11 +34,15 @@ int Server::start_game(std::string drawpilestring)
     return n_players;
 }
 
-void Server::join_game(std::string join_code) {
+bool Server::join_game(std::string join_code) {
     send(join_code);
     this->join_code = join_code;
     std::string id_s = recv();
     this->player_id = std::stoi(id_s);
+    if (this->player_id < 0) {
+        return false;
+    }
+    return true;
 }
 
 Server::~Server() {
