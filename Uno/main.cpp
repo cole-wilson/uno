@@ -16,6 +16,8 @@
 int main() {
     Game game;
 
+    game.uno_thread();
+
     sf::Texture cardback_texture;
     if (!cardback_texture.loadFromFile("cards/back.png")) {}
     sf::Sprite drawpile_sprite(cardback_texture);
