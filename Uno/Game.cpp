@@ -4,6 +4,8 @@ Game::Game() : drawpile("B0,B1,B1,B2,B2,B3,B3,B4,B4,B5,B5,B6,B6,B7,B7,B8,B8,B9,B
 }
 
 void Game::mainloop() {
+    SoundPlayer uno_sound("uno.wav");
+
     if (serv.get_player_id() != 0) {
         n_players = std::stoi(serv.recv());
         //std::cout << n_players << std::endl;
@@ -15,6 +17,7 @@ void Game::mainloop() {
     while (discardpile.read_face_up()->get_type() == ACTION) {
         discardpile.put_face_up(drawpile.draw_one_card());
     }
+
 
     for (int pid = 0; pid < serv.get_player_id(); pid++) {
         for (int cardi = 0; cardi < 7; cardi++) {
@@ -132,6 +135,15 @@ void Game::mainloop() {
             serv.send(turndata.to_string());
 
             this->n_cards[0] = hand.size();
+            if (handindex < 0) handindex = 0;
+
+            if (hand.size() < 2) {
+                uno_sound.play();
+            }
+            if (hand.size() == 0) {
+                mode = WIN;
+                return;
+            }
 
             turn = next_player;
 
@@ -161,7 +173,8 @@ void Game::mainloop() {
             direction = turndata.get_direction();
             n_cards[turn] = turndata.get_cards_in_hand();
 
-            if (turndata.get_cards_in_hand() == 0) return;
+            if (turndata.get_cards_in_hand() == 1) uno_sound.play();
+            if (turndata.get_cards_in_hand() == 0) {mode = WIN; return; }
         }
         //std::cout << std::endl << std::endl << std::endl;
     }

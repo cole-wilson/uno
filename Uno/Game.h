@@ -1,5 +1,6 @@
 #pragma once
 #include "Deck.h"
+#include "SoundPlayer.h"
 #include "Server.h"
 #include <mutex>
 #include <condition_variable>
@@ -38,9 +39,5 @@ public:
 
     void release_select();
     void wait_select();
-
-    void uno_func();
-
-
 };
 

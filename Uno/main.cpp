@@ -18,8 +18,9 @@ int main() {
     Game game;
     
     SoundPlayer uno_sound("uno.wav");
-    SoundPlayer click_sound("click.wav");
     uno_sound.play();
+    SoundPlayer click_sound("click.wav");
+
 
     sf::Texture cardback_texture;
     if (!cardback_texture.loadFromFile("cards/back.png")) {}
@@ -220,7 +221,6 @@ int main() {
         {
             window.clear(sf::Color::Red);
         }
-        
 
         if (game.mode == MENU) {
             menu.draw(window);
