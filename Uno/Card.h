@@ -1,3 +1,15 @@
+/*
+* Uno - CPT_S 122 Final Project
+* 
+* Cole Wilson and Shane Ganz
+* 
+* Card.h
+* 
+* Represents a generic Card (of either Action or Number type, which is implemented
+* in the subclasses). Every Card has a color. It is also implemented as a subclass of
+* sf::Sprite, so that we can draw the card objects on the window.
+*/
+
 #pragma once
 
 #include <string>

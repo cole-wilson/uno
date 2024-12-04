@@ -1,3 +1,14 @@
+/*
+* Uno - CPT_S 122 Final Project
+*
+* Cole Wilson and Shane Ganz
+*
+* Menu.h
+*
+* Handles the entrypoint menu for the game where the user can
+* choose different options.
+*/
+
 #pragma once
 
 #include <SFML/Graphics.hpp>

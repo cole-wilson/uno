@@ -1,3 +1,14 @@
+/*
+* Uno - CPT_S 122 Final Project
+*
+* Cole Wilson and Shane Ganz
+*
+* Menu.cpp
+*
+* Handles the entrypoint menu for the game where the user can
+* choose different options.
+*/
+
 #include "Menu.h"
 #include <iostream>
 

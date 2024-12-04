@@ -1,3 +1,13 @@
+/*
+* Uno - CPT_S 122 Final Project
+*
+* Cole Wilson and Shane Ganz
+*
+* NumberCard.h
+*
+* Represents an NumberCard as a subclass of Card which has an number.
+*/
+
 #pragma once
 #include "Card.h"
 class NumberCard : public Card {

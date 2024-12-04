@@ -143,6 +143,7 @@
     <ClCompile Include="NumberCard.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="SoundPlayer.cpp" />
+    <ClCompile Include="TestCases.cpp" />
     <ClCompile Include="TurnData.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -153,9 +154,9 @@
     <ClInclude Include="GraphicsMain.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="NumberCard.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="SoundPlayer.h" />
+    <ClInclude Include="TestCases.h" />
     <ClInclude Include="TurnData.h" />
   </ItemGroup>
   <ItemGroup>
