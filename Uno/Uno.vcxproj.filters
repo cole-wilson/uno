@@ -91,6 +91,9 @@
     <None Include="..\server\index.html">
       <Filter>Resource Files\Server</Filter>
     </None>
+    <None Include="..\Dockerfile">
+      <Filter>Resource Files\Server</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Font Include="helvetica.ttf">

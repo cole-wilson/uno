@@ -155,6 +155,7 @@
     <ClInclude Include="TurnData.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Dockerfile" />
     <None Include="..\README.md" />
     <None Include="..\server\index.html" />
     <None Include="..\server\main.py" />
