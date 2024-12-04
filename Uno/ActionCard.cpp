@@ -11,20 +11,26 @@
 
 #include "ActionCard.h"
 
+// construct an action card from a color and action type
 ActionCard::ActionCard(const CARD_COLOR color, CARD_ACTION action) {
     this->color = color;
     this->action = action;
 
+    // load the card texture from the file
     load_texture();
 }
 
 std::string ActionCard::to_string() const
 {
+    // construct a string from the char enum of the color type
     std::string output{ (char)this->color };
+
+    // add the action char enum char
     output += (char)this->action;
     return output;
 }
 
+// getters
 CARD_ACTION ActionCard::get_action() const
 {
     return this->action;

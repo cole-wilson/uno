@@ -44,7 +44,7 @@ public:
 	// different than inherited getColor()!
 	CARD_COLOR get_color() const;
 
-	// virtual to_string method for serialization
+	// pure virtual to_string method for serialization
 	virtual std::string to_string() const;
 
 	// get the type of card (CARD_TYPE)

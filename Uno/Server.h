@@ -15,8 +15,8 @@
 // the main production server:
 #define SERVER_ADDRESS "uno.cole.ws"
 
-// for debugging, Cole's mac on a local tailnet instance
-//#define SERVER_ADDRESS "mac.net.cole.ws"
+// for debugging, Cole's mac on a local tailnet (only works on Cole's windows machine)
+// #define SERVER_ADDRESS "mac.net.cole.ws"
 
 // the TCP port used by the server
 #define SERVER_PORT 9999

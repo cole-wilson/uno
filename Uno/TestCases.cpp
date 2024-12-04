@@ -12,6 +12,7 @@
 
 
 void TestCases::testNewGame() {
+	// test sending the "new" message to the server and getting a code
 	Server server;
 	server.new_game();
 	if (server.get_join_code() != "") {
@@ -26,7 +27,9 @@ void TestCases::testNewGame() {
 void TestCases::testJoinGame() {
 	Server hostServer;
 	hostServer.new_game();
+	// ^^ start a new test game
 
+	// check if joining with that code gives player index == 1
 	Server joinServer;
 	joinServer.join_game(hostServer.get_join_code());
 	if (joinServer.get_player_id() == 1) {
@@ -38,6 +41,7 @@ void TestCases::testJoinGame() {
 }
 
 void TestCases::testTurnDataRead() {
+	// test deserializing a turndata object from a string
 	TurnData td("1\n1\n1\n1\nB0\n");
 	bool card_ok = td.get_card()->get_color() == BLUE;
 	bool drawn_ok = td.get_cards_drawn() == 1;
@@ -54,6 +58,7 @@ void TestCases::testTurnDataRead() {
 }
 
 void TestCases::testTurnDataWrite() {
+	// test serializing a turndata object TO a string
 	TurnData td(1, 1, 1, 1, new NumberCard(BLUE, 0));
 	if (td.to_string() == "1\n1\n1\n1\nB0\n") {
 		std::cout << "[PASS] testTurnDataWrite()" << std::endl;
@@ -64,6 +69,7 @@ void TestCases::testTurnDataWrite() {
 }
 
 void TestCases::testDeckFromString() {
+	// read a deck from string
 	Deck deck("B0");
 	if (deck.read_face_up()->get_color() == BLUE) {
 		std::cout << "[PASS] testDeckFromString()" << std::endl;
@@ -75,6 +81,7 @@ void TestCases::testDeckFromString() {
 
 void TestCases::runAll()
 {
+	// run each test sequentially
 	testNewGame();
 	testJoinGame();
 	testTurnDataRead();

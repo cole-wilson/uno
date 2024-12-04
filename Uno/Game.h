@@ -32,6 +32,9 @@ enum GAME_MODE {
 class GraphicsMain;
 
 class Game {
+    // flag to quit thread
+    bool quit = false;
+
     // the decks/hands used
     Deck drawpile;
     Deck discardpile;
@@ -64,12 +67,14 @@ public:
     // constructor
     Game();
 
+    // method to set quit flag thread
+    void quit_thread();
+
     // the server object
     // (public for global access, just here so in namespace scope...)
     Server serv;
 
     // allow GraphicsMain to edit
     friend GraphicsMain;
-
 };
 

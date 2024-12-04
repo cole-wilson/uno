@@ -14,14 +14,17 @@ NumberCard::NumberCard(const CARD_COLOR color, int number) {
 	this->number = number;
 	this->color = color;
 
+	// load the sprite texture given the string
 	load_texture();
 }
 
 std::string NumberCard::to_string() const {
+	// make the string consisting of color char + number
 	std::string output = (char)this->color + std::to_string(this->get_number());
 	return output;
 }
 
+// getters
 int NumberCard::get_number() const {
 	return this->number;
 }

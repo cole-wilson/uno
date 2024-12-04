@@ -13,26 +13,32 @@
 #include "Card.h"
 
 
+// getter
 CARD_COLOR Card::get_color() const {
     return this->color;
 }
 
+// unused, virtual function overridden in the subclasses
 std::string Card::to_string() const {
     return "" + ((char)this->color);
 }
 
+// getter
 CARD_TYPE Card::get_type() const
 {
     return NONE;
 }
 
+// load the texture file from the cards/ directory
 void Card::load_texture() {
+	// if card is a real card
 	if (to_string() != "no") {
 		std::string filepath = "cards/" + to_string() + ".png";
 		if (!texture.loadFromFile(filepath))
 		{
 			throw 1;
 		}
+		// use the inherited setTexture() from sf::Sprite
 		setTexture(texture);
 	}
 }
