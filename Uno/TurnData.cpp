@@ -37,6 +37,7 @@ TurnData::TurnData(int cards_drawn, int cards_in_hand, int next_player, int dire
 	this->card = card;
 }
 
+// getters
 int TurnData::get_cards_drawn()
 {
 	return this->cards_drawn;

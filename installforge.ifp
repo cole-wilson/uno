@@ -57,7 +57,7 @@ Time = 2
 PlaySound = 1
 Allow = 0
 [Build]
-File = C:\Users\Cole Wilson\Downloads\unoinstaller.exe
+File = C:\Users\Cole Wilson\Downloads\InstallUNO.exe
 SetupIconPath = C:\Users\Cole Wilson\source\repos\Uno\exelogo.ico
 UninstallIconPath = C:\Users\Cole Wilson\source\repos\Uno\exelogo.ico
 CompressionMethod = 0

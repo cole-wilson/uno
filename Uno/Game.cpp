@@ -176,7 +176,8 @@ void Game::mainloop() {
             }
 
             Card* card = turndata.get_card();
-            if (card != nullptr) {
+            std::cout << card->to_string() << std::endl;
+            if (card != nullptr && card->get_type() != NONE && card->to_string() != "no") {
                 discardpile.put_face_up(card);
             }
 
