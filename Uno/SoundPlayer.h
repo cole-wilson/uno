@@ -7,6 +7,7 @@ class SoundPlayer {
     sf::SoundBuffer buffer;
     sf::Sound sound;
 public:
+    SoundPlayer() {};
     SoundPlayer(std::string filename);
     void play();
 };
