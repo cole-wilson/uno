@@ -4,6 +4,20 @@ Game::Game() : drawpile("B0,B1,B1,B2,B2,B3,B3,B4,B4,B5,B5,B6,B6,B7,B7,B8,B8,B9,B
 }
 
 void Game::mainloop() {
+    discardpile.put_face_up(drawpile.draw_one_card());
+    while (discardpile.read_face_up()->get_type() == ACTION) {
+        discardpile.put_face_up(drawpile.draw_one_card());
+    }
+
+    for (int pid = 0; pid < serv.get_player_id(); pid++) {
+        for (int cardi = 0; cardi < 7; cardi++) {
+            drawpile.burn_one_card();
+        }
+    }
+    for (int i = 0; i < 7; i++) {
+        hand.put_face_up(drawpile.draw_one_card());
+    }
+
     if (serv.get_player_id() != 0) {
         n_players = std::stoi(serv.recv());
         //std::cout << n_players << std::endl;
