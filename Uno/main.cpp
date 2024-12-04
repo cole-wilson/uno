@@ -13,7 +13,6 @@
 #include <thread>
 #include <math.h>
 
-
 int main() {
     Game game;
 
@@ -111,7 +110,7 @@ int main() {
                     }
                     else
                     {
-                        menu.CodeStore(game, "Wrong code, please restart the game");
+                        menu.CodeStore(game, "Wrong code, please restart the game!");
                     }
                     
                 }
@@ -209,21 +208,21 @@ int main() {
             window.draw(drawpile_sprite);
 
             for (int i = 0; i < game.hand.size(); i++) {
-                if (i != game.handindex && game.mode == SELECTING_CARD) {
+                if (i != game.handindex || game.mode != SELECTING_CARD) {
                     Card* card = game.hand.get_all_cards().at(i);
                     card->setPosition(i * 70, window.getSize().y - 360);
                     window.draw(*card);
                 }
             }
         }
-        if (game.mode == SELECTING_CARD) {
+        if (game.mode == SELECTING_CARD || game.mode == WAITING_FOR_OTHER_PLAYERS) {
             mainmessage.setString("Select a Card To Play:");
             int cardindex = std::max(0, game.handindex);
             Card* selectedcard = game.hand.get_all_cards().at(cardindex);
             selectedcard->setPosition(cardindex * 70, window.getSize().y - 400);
             window.draw(*selectedcard);
         }
-        else if (game.mode == WAITING_FOR_OTHER_PLAYER) {
+        else if (game.mode == WAITING_FOR_OTHER_PLAYERS) {
             mainmessage.setString("Waiting for Player " + std::to_string(game.turn) + "...");
         }
 

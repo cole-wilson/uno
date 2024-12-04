@@ -136,7 +136,7 @@ void Game::mainloop() {
         }
         else {
             // wait for someone elses turn
-            mode = WAITING_FOR_OTHER_PLAYER;
+            mode = WAITING_FOR_OTHER_PLAYERS;
             bool win = false;
             TurnData turndata(serv.recv());
 

@@ -15,10 +15,12 @@ CARD_TYPE Card::get_type() const
 }
 
 void Card::load_texture() {
-	std::string filepath = "cards/" + to_string() + ".png";
-	if (!texture.loadFromFile(filepath))
-	{
-		throw 1;
+	if (to_string() != "nocard") {
+		std::string filepath = "cards/" + to_string() + ".png";
+		if (!texture.loadFromFile(filepath))
+		{
+			throw 1;
+		}
+		setTexture(texture);
 	}
-	setTexture(texture);
 }
