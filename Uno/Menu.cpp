@@ -59,6 +59,10 @@ void Menu::draw(sf::RenderWindow& window)
 	case JOIN_STATE:
 		window.draw(joinmessage);
 		break;
+	case WAITING_STATE:
+		waitingmessage.setString("Waiting for host...");
+		window.draw(waitingmessage);
+		break;
 	}
 	
 	
@@ -97,6 +101,3 @@ void Menu::CodeStore(Game& game, string codeInput)
 }
 
 
-
-
-//nmethod adds to empty string

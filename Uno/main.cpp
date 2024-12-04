@@ -64,7 +64,7 @@ int main() {
                     if ((c >= 'a' && c <= 'z')) {
                         c = (c - 'a') + 'A';
                     }
-                    codeInput += (char)event.text.unicode;
+                    codeInput += c;
                     menu.CodeStore(game, codeInput);
                 }
             }
@@ -107,10 +107,11 @@ int main() {
                     if (success = true)
                     {
                         gamethread = std::thread(&Game::mainloop, &game);
+                        menu.menu_state = WAITING_STATE;
                     }
                     else
                     {
-                        menu.CodeStore(game, "Wrong code, please restart");
+                        menu.CodeStore(game, "Wrong code, please restart the game");
                     }
                     
                 }
@@ -158,7 +159,7 @@ int main() {
 
                 for (int i = -1; i < (int)game.hand.get_all_cards().size(); i++) {
                     sf::FloatRect cardbox;
-                    
+
                     if (i < 0) {
                         cardbox = drawpile_sprite.getGlobalBounds();
                     }
@@ -170,7 +171,8 @@ int main() {
                     int rightbound = cardbox.left + 70;
                     if (i == game.handindex || i == game.hand.get_all_cards().size() - 1 || i == -1) {
                         rightbound = cardbox.left + cardbox.width;
-;                   }
+                        ;
+                    }
 
                     bool in_x = mx > cardbox.left && mx < rightbound;
                     bool in_y = my > cardbox.top && my < cardbox.top + cardbox.height;
@@ -183,7 +185,7 @@ int main() {
                         break;
                     }
                 }
-            }
+            } 
         }
 
         // clear the window with black color
