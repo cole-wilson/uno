@@ -33,4 +33,5 @@ private:
 	sf::Text menu[NUMBER_MENU_OPTIONS];
 	sf::Text hostmessage;
 	sf::Text joinmessage;
+	sf::Text waitingmessage;
 };
