@@ -2,6 +2,8 @@
 #include <iostream>
 
 
+
+
 Menu::Menu(float width, float height)
 {
 	if (!font.loadFromFile("helvetica.ttf"))
@@ -42,6 +44,9 @@ Menu::Menu(float width, float height)
 	waitingmessage.setPosition(sf::Vector2f(width / 2, height / (NUMBER_MENU_OPTIONS + 1) * 2));
 	waitingmessage.setStyle(sf::Text::Bold);
 
+	if (!logo_texture.loadFromFile("unologo.png")) {}
+	logo_sprite = sf::Sprite(logo_texture);
+	logo_sprite.setPosition(sf::Vector2f(width / 2, 0));
 	selectedItem = 0;
 }
 
@@ -53,6 +58,7 @@ void Menu::draw(sf::RenderWindow& window)
 	switch (menu_state)
 	{
 	case INITIAL_STATE:
+		window.draw(logo_sprite);
 		for (int i = 0; i < NUMBER_MENU_OPTIONS; i++)
 		{
 			window.draw(menu[i]);
@@ -104,5 +110,6 @@ void Menu::CodeStore(Game& game, string codeInput)
 {
 	joinmessage.setString("Enter code:\n" + codeInput + "\nPress enter when ready...");
 }
+
 
 
