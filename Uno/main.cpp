@@ -117,7 +117,6 @@ int main() {
                 else if (event.key.code == sf::Keyboard::Backspace && menu.menu_state == JOIN_STATE)
                 {
                     codeInput = codeInput.substr(0, codeInput.size() - 1);
-                    std::cout << codeInput << std::endl;
                     menu.CodeStore(game, codeInput);
                 }
             

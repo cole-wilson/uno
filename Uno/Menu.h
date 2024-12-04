@@ -6,6 +6,7 @@
 
 #define NUMBER_MENU_OPTIONS 3
 
+
 enum MENU_STATE {
 	INITIAL_STATE = 0,
 	HOST_STATE = 1,
@@ -34,4 +35,6 @@ private:
 	sf::Text hostmessage;
 	sf::Text joinmessage;
 	sf::Text waitingmessage;
+	sf::Texture logo_texture;
+	sf::Sprite logo_sprite;
 };
