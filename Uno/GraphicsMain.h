@@ -1,3 +1,16 @@
+/*
+* Uno - CPT_S 122 Final Project
+*
+* Cole Wilson and Shane Ganz
+*
+* GraphicsMain.h
+*
+* Represents the main graphics thread of Uno, minus the game logic. This runs a method
+* in a seperate thread from the logic thread, and communicates with it
+* using locks, mutexes, and condition variables. The main event loop and SFML window
+* handling is all encapsulated within this class.
+*/
+
 #pragma once
 
 #include "Deck.h"

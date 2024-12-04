@@ -1,3 +1,16 @@
+/*
+* Uno - CPT_S 122 Final Project
+*
+* Cole Wilson and Shane Ganz
+*
+* GraphicsMain.cpp
+*
+* Represents the main graphics thread of Uno, minus the game logic. This runs a method
+* in a seperate thread from the logic thread, and communicates with it
+* using locks, mutexes, and condition variables. The main event loop and SFML window
+* handling is all encapsulated within this class.
+*/
+
 #include "GraphicsMain.h"
 
 GraphicsMain::GraphicsMain() {
@@ -209,7 +222,11 @@ void GraphicsMain::run()
             std::string oplayer_text;
             for (int i = 0; i < game.n_players; i++) {
                 std::string arrow = game.turn == i ? (game.direction == 1 ? ">>> " : "<<< ") : "    ";
-                oplayer_text += arrow + "Player " + std::to_string(i + 1) + ": " + std::to_string(game.n_cards[i]) + " cards\n";
+                std::string player_name = "Player " + std::to_string(i + 1);
+                if (game.serv.get_player_id() == i) {
+                    player_name = "Me";
+                }
+                oplayer_text += arrow + player_name + ": " + std::to_string(game.n_cards[i]) + " cards\n";
             }
             otherplayers.setString(oplayer_text);
             window.draw(otherplayers);

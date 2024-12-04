@@ -1,3 +1,14 @@
+/*
+* Uno - CPT_S 122 Final Project
+*
+* Cole Wilson and Shane Ganz
+*
+* ActionCard.cpp
+*
+* Represents an ActionCard as a subclass of Card which has an action. This can
+* also be an undecided wild card as well. The type is a value of CARD_ACTION enum.
+*/
+
 #include "ActionCard.h"
 
 ActionCard::ActionCard(const CARD_COLOR color, CARD_ACTION action) {

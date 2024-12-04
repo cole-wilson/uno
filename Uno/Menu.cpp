@@ -1,7 +1,16 @@
+/*
+* Uno - CPT_S 122 Final Project
+*
+* Cole Wilson and Shane Ganz
+*
+* Menu.cpp
+*
+* Handles the entrypoint menu for the game where the user can
+* choose different options.
+*/
+
 #include "Menu.h"
 #include <iostream>
-
-
 
 
 Menu::Menu(float width, float height)
@@ -13,7 +22,7 @@ Menu::Menu(float width, float height)
 
 	menu[0].setFont(font);
 	menu[0].setFillColor(sf::Color::Yellow);
-	menu[0].setString("Host");
+	menu[0].setString("Host\n(use arrows)");
 	menu[0].setPosition(sf::Vector2f(width / 2.1, height / (NUMBER_MENU_OPTIONS + 1) * 1.3));
 	menu[0].setStyle(sf::Text::Bold | sf::Text::Underlined);
 

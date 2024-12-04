@@ -1,3 +1,13 @@
+/*
+* Uno - CPT_S 122 Final Project
+*
+* Cole Wilson and Shane Ganz
+*
+* NumberCard.cpp
+*
+* Represents an NumberCard as a subclass of Card which has an number.
+*/
+
 #include "NumberCard.h"
 
 NumberCard::NumberCard(const CARD_COLOR color, int number) {

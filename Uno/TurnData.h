@@ -1,3 +1,14 @@
+/*
+* Uno - CPT_S 122 Final Project
+*
+* Cole Wilson and Shane Ganz
+*
+* TurnData.h
+*
+* This class represents all the data needed to parse a remote turn event,
+* including what the player did. This also handles socket serialization of itself.
+*/
+
 #pragma once
 
 #include "NumberCard.h"

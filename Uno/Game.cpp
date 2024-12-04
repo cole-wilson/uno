@@ -1,38 +1,59 @@
+/*
+* Uno - CPT_S 122 Final Project
+*
+* Cole Wilson and Shane Ganz
+*
+* Game.cpp
+*
+* Represents the main gane thread logic of Uno, minus the graphics. This runs a method
+* in a seperate thread from the main graphics thread, and communicates with the main thread
+* using locks, mutexes, and condition variables. It is a friend of GraphicsMain in order to
+* share state across threads. Many variables are not technically thread-safe, although extra
+* care has been taking to only read and write to the necessary ones.
+*/
+
+
 #include "Game.h"
 
 Game::Game() : drawpile("B0,B1,B1,B2,B2,B3,B3,B4,B4,B5,B5,B6,B6,B7,B7,B8,B8,B9,B9,Bs,Bs,Br,Br,Bd,Bd,G0,G1,G1,G2,G2,G3,G3,G4,G4,G5,G5,G6,G6,G7,G7,G8,G8,G9,G9,Gs,Gs,Gr,Gr,Gd,Gd,R0,R1,R1,R2,R2,R3,R3,R4,R4,R5,R5,R6,R6,R7,R7,R8,R8,R9,R9,Rs,Rs,Rr,Rr,Rd,Rd,Y0,Y1,Y1,Y2,Y2,Y3,Y3,Y4,Y4,Y5,Y5,Y6,Y6,Y7,Y7,Y8,Y8,Y9,Y9,Ys,Ys,Yr,Yr,Yd,Yd,Ww,Ww,Ww,Ww,Wf,Wf,Wf,Wf") {
+    this->select_has_selected = false;
+    this->n_cards = nullptr;
 }
 
 void Game::mainloop() {
     SoundPlayer uno_sound("uno.wav");
 
     if (serv.get_player_id() != 0) {
+        // finish setup if this isn't host computer
         n_players = std::stoi(serv.recv());
-        //std::cout << n_players << std::endl;
         drawpile.clear_from_string(serv.recv());
     }
 
-
+    // set up draw pile
     discardpile.put_face_up(drawpile.draw_one_card());
     while (discardpile.read_face_up()->get_type() == ACTION) {
         discardpile.put_face_up(drawpile.draw_one_card());
     }
 
 
+    // discard cards "drawn" by other networked players
     for (int pid = 0; pid < serv.get_player_id(); pid++) {
         for (int cardi = 0; cardi < 7; cardi++) {
             drawpile.burn_one_card();
         }
     }
+    // draw 7 cards
     for (int i = 0; i < 7; i++) {
         hand.put_face_up(drawpile.draw_one_card());
     }
 
+    // initialize n_cards
     n_cards = new int[n_players];
     for (int i = 0; i < n_players; i++) {
         n_cards[i] = 7;
     }
 
+    // mainloop
     while (true) {
         Card* tomatch = discardpile.read_face_up();
 
@@ -59,8 +80,6 @@ void Game::mainloop() {
                     hand.put_face_up(drawpile.draw_one_card());
                 }
             }
-            //std::cout << "HAND: " << hand.to_string() << std::endl;
-            //std::cout << "\tchoose index to play: ";
 
             mode = SELECTING_CARD;
             int n_draws = 0;
@@ -83,8 +102,7 @@ void Game::mainloop() {
                     potential_card = hand.get_all_cards().at(handindex);
                 }
 
-                //std::cout << potential_card->get_color() << " --- " << tomatch->get_color() << std::endl;
-
+                // check if card is okay
                 bool color_okay = potential_card->get_color() == tomatch->get_color() || potential_card->get_color() == WILD_CARD;
                 bool type_num_okay = false;
                 if (potential_card->get_type() == ACTION && tomatch->get_type() == ACTION) {
@@ -130,7 +148,6 @@ void Game::mainloop() {
                 handindex = std::min(handindex, hand.size() - 1);
             }
 
-
             TurnData turndata(cards_drawn, hand.size(), next_player, direction, card_played);
             serv.send(turndata.to_string());
 
@@ -160,14 +177,8 @@ void Game::mainloop() {
 
             Card* card = turndata.get_card();
             if (card != nullptr) {
-                //std::cout << "player " << turn << " played " << card->to_string() << std::endl;
                 discardpile.put_face_up(card);
             }
-            else {
-                //std::cout << "player " << turn << " didn't play a card" << std::endl;
-            }
-
-            //std::cout << "player " << turn << " has " << turndata.get_cards_in_hand() << " cards" << std::endl;
 
             turn = turndata.get_next_player();
             direction = turndata.get_direction();
@@ -176,7 +187,6 @@ void Game::mainloop() {
             if (turndata.get_cards_in_hand() == 1) uno_sound.play();
             if (turndata.get_cards_in_hand() == 0) {mode = WIN; return; }
         }
-        //std::cout << std::endl << std::endl << std::endl;
     }
 }
 
@@ -188,7 +198,6 @@ void Game::release_select() {
     select_cv.notify_one();
 }
 void Game::wait_select() {
-    std::cout << "waiting..." << std::endl;
     std::unique_lock<std::mutex> lck(select_mtx);
     select_cv.wait(lck, [&] {
         return select_has_selected;
