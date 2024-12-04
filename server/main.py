@@ -7,8 +7,10 @@ import datetime
 from flask import Flask
 from threading import Thread
 
+# create Flask webserver instance for uno.cole.ws website
 webserver = Flask(__name__)
 
+# read and parse markdown readme file and format into index.html
 try:
     markdown = open("./README.md").read()
 except FileNotFoundError:
@@ -17,20 +19,25 @@ index_html = open("./index.html").read().replace("{{MARKDOWN}}", markdown2.markd
 deploy_time = datetime.datetime.now()
 index_html = index_html.replace("TIME", f"last deploy at: {deploy_time.isoformat()}, # games: ACTIVE_GAMES")
 
+# webserver dynamic entrypoint
 hits = 0
-
 @webserver.route("/")
 def info_page():
-    global hits
+    global hits # use variable globally
     hits += 1
+    # add values to page
     return index_html.replace("ACTIVE_GAMES", str(len(games.keys())) + ", uptime: " + str(datetime.datetime.now() - deploy_time) + ", pageviews: " + str(hits))
 
+
+# stores all current games
 games = {}
 
-
+# for backwards compatibility on 3.8
 if "timeout" in dir(socket):
     TimeoutError = socket.timeout
 
+
+# basic class (essentially just struct) to store Game data
 class Game:
     def __init__(self, code, server_sock):
         self.clients = [server_sock]
@@ -38,74 +45,86 @@ class Game:
         self.players = 1
         self.started = False
 
-
+# custom handler for socket requests
 class UnoTCPHandler(socketserver.BaseRequestHandler):
+    # all print statements just for debugging!
     def handle(self):
         print("new connection\n\n")
         player_index = None
 
-        initial_data = self.request.recv(1024)
-        print(f"got `{initial_data}`")
-        initial_data = initial_data.strip().strip(b"\x00").decode()
-        print(f"which is `{initial_data}`")
+        initial_data = self.request.recv(1024).strip().strip(b"\x00").decode()
+        print(">>>", initial_data)
         join_code = None
+
+        # client is trying to host a new game:
         if initial_data == "new":
+            # generate random code and hope for no collisions!
             join_code = "".join(random.choices("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", k=6))
             # join_code = "DEBUG"
-            print("code", join_code)
+
+            # send code back to server
+            print("code is", join_code)
             self.request.sendall(join_code.encode())
+
+            # add game into entry of all games (in the dictionary)
             games[join_code] = Game(join_code, self.request)
-            player_index = 0
+            player_index = 0 # host is always index 0
+
+            # wait for host to start the game
             data = self.request.recv(1024)
             if data == b"start":
                 games[join_code].started = True
                 for client in games[join_code].clients:
+                    # send the # of players to each other client including the host
                     client.sendall(str(len(games[join_code].clients)).encode())
 
-        else:
-            # print("new", initial_data)
+        else: # the client is joining a game
             if initial_data in games:
                 join_code = initial_data
                 player_index = games[join_code].players
+                # set to next player index
                 games[join_code].players += 1
-                games[join_code].clients.append(self.request)
-                self.request.sendall(f"{player_index}".encode())
-            # elif games[join_code].started:
-                # self.request.sendall(b"too late")
-            else:
-                self.request.sendall(b"-1")
 
+                # add socket connection to list of all clients
+                games[join_code].clients.append(self.request)
+
+                # send the new player id back to the client
+                self.request.sendall(f"{player_index}".encode())
+            else: # game doesn't exist
+                self.request.sendall(b"-1")
+        
+        # from here on out, make sockets non-blocking
         self.request.settimeout(0.1)
 
         while True:
             try:
+                # if data is recieved from client:
                 data = self.request.recv(1024)
                 print(">>", data)
                 if data == b"":
+                    # end of connection...
                     return
+                # ...echo that data to each otehr client
                 for client in games[join_code].clients:
-                    if client != self.request:
+                    if client != self.request: # don't send back to self
                         client.sendall(data)
             except TimeoutError:
+                # no data yet...
                 pass
-
-            # self.request.sendall(str(games[join_code].queue.qsize()).encode())
-
-            # if not games[join_code].queue.empty():
-                # self.request.sendall(games[join_code].queue.get())
-
-            # self.request.sendall(self.data.upper())
 
 
 # base code from https://docs.python.org/3/library/socketserver.html
 if __name__ == "__main__":
+    # bind to all adrresses on 8080
     webthread = Thread(target=webserver.run, kwargs={"host":"0.0.0.0", "port":8080})
+    # start other thread for webserver
     webthread.start()
 
+    # bind socket program to all addresses on 9999
     HOST, PORT = "", 9999
-    ReuseServer = socketserver.ThreadingTCPServer
-    ReuseServer.allow_reuse_address = True
-    ReuseServer.allow_reuse_port = True
+    ReuseServer = socketserver.ThreadingTCPServer # allow threading for each new connection
+    ReuseServer.allow_reuse_address = True # allow reuse
+    ReuseServer.allow_reuse_port = True # ""
     with ReuseServer((HOST, PORT), UnoTCPHandler) as server:
         server.serve_forever()
-    webthread.join()
+    webthread.join() # join back webserver when done

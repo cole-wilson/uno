@@ -103,9 +103,6 @@
     <None Include="..\README.md">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="embedding.py">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="..\server\main.py">
       <Filter>Resource Files\Server</Filter>
     </None>
@@ -114,6 +111,9 @@
     </None>
     <None Include="..\Dockerfile">
       <Filter>Resource Files\Server</Filter>
+    </None>
+    <None Include="..\installforge.ifp">
+      <Filter>Resource Files\Resources</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -313,6 +313,9 @@
     </Image>
     <Image Include="cards\Yw.png">
       <Filter>Resource Files\Resources\cards</Filter>
+    </Image>
+    <Image Include="..\exelogo.ico">
+      <Filter>Resource Files\Resources</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

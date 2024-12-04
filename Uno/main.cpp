@@ -2,8 +2,8 @@
 #include "TestCases.h"
 
 int main() {
-    TestCases tests;
-    tests.runAll();
+    // TestCases tests;
+    // tests.runAll();
 
     GraphicsMain graphics_main;
 

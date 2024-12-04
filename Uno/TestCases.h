@@ -18,13 +18,23 @@
 #include <iostream>
 
 class TestCases {
-public:
+	// tests the server new game functionality
 	void testNewGame();
+
+	// tests the join game functionality of server
 	void testJoinGame();
+
+	// tests reading a TurnData object from string
 	void testTurnDataRead();
+	
+	// tests writing a TurnData object to a string
 	void testTurnDataWrite();
+
+	// tests reading a deck from a string
 	void testDeckFromString();
 
+public:
+	// run all of the tests
 	void runAll();
 };
 
