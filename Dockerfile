@@ -17,4 +17,5 @@ COPY ./README.md /usr/src/app
 EXPOSE 9999
 EXPOSE 8080
 
-CMD ["python", "main.py"]
+# CMD ["python", "main.py"]
+CMD ["READ"]
