@@ -46,7 +46,7 @@ Menu::Menu(float width, float height)
 
 	if (!logo_texture.loadFromFile("unologo.png")) {}
 	logo_sprite = sf::Sprite(logo_texture);
-	logo_sprite.setPosition(sf::Vector2f(width / 2, 0));
+	logo_sprite.setPosition(sf::Vector2f((width / 2) - (330 / 2), 0));
 	selectedItem = 0;
 }
 
