@@ -17,9 +17,11 @@
 int main() {
     Game game;
     
-    SoundPlayer uno_sound("uno.wav");
+    SoundPlayer uno_sound("sounds/uno.wav");
     uno_sound.play();
-    SoundPlayer click_sound("click.wav");
+    SoundPlayer click_sound("sounds/click.wav");
+    SoundPlayer card_sound("sounds/card.wav"); 
+    
 
 
     sf::Texture cardback_texture;
@@ -192,7 +194,7 @@ int main() {
                     int rightbound = cardbox.left + 70;
                     if (i == game.handindex || i == game.hand.get_all_cards().size() - 1 || i == -1) {
                         rightbound = cardbox.left + cardbox.width;
-                        ;
+                        
                     }
 
                     bool in_x = mx > cardbox.left && mx < rightbound;
