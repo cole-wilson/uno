@@ -13,24 +13,29 @@ Menu::Menu(float width, float height)
 	menu[0].setFillColor(sf::Color::Yellow);
 	menu[0].setString("Host");
 	menu[0].setPosition(sf::Vector2f(width / 2, height / (NUMBER_MENU_OPTIONS + 1) * 1));
+	menu[0].setStyle(sf::Text::Bold);
 
 	menu[1].setFont(font);
 	menu[1].setFillColor(sf::Color::Red);
 	menu[1].setString("Join");
 	menu[1].setPosition(sf::Vector2f(width / 2, height / (NUMBER_MENU_OPTIONS + 1) * 2));
-	
+	menu[1].setStyle(sf::Text::Bold);
+
 	menu[2].setFont(font);
 	menu[2].setFillColor(sf::Color::Red);
 	menu[2].setString("Exit");
 	menu[2].setPosition(sf::Vector2f(width / 2, height / (NUMBER_MENU_OPTIONS + 1) * 3));
+	menu[2].setStyle(sf::Text::Bold);
 
 	hostmessage.setFont(font);
 	hostmessage.setFillColor(sf::Color::Yellow);
 	hostmessage.setPosition(sf::Vector2f(width / 2, height / (NUMBER_MENU_OPTIONS + 1) * 2));
+	hostmessage.setStyle(sf::Text::Bold);
 
 	joinmessage.setFont(font);
 	joinmessage.setFillColor(sf::Color::Yellow);
 	joinmessage.setPosition(sf::Vector2f(width / 2, height / (NUMBER_MENU_OPTIONS + 1) * 2));
+	joinmessage.setStyle(sf::Text::Bold);
 
 	selectedItem = 0;
 }

@@ -25,6 +25,7 @@ int main() {
     if (!helvetica.loadFromFile("helvetica.ttf")) {
         std::cerr << "Font error..." << std::endl;
     }
+
     sf::Text mainmessage;
     mainmessage.setFont(helvetica);
     mainmessage.setFillColor(sf::Color::White);
@@ -59,7 +60,6 @@ int main() {
     std::thread gamethread;
 
     while (window.isOpen()) {
-        std::cout << codeInput << std::endl;
 
         sf::Event event;
         while (window.pollEvent(event))
@@ -98,6 +98,7 @@ int main() {
                         break;
                     case 1:
                        menu.menu_state = JOIN_STATE;
+                       menu.CodeStore(game, codeInput);
                        break;
                     case 2:
                         window.close();
@@ -112,9 +113,17 @@ int main() {
                     gamethread = std::thread(&Game::mainloop, &game);
                 }
                 else if (event.key.code == sf::Keyboard::Return && menu.menu_state == JOIN_STATE)
-                {
-                    game.serv.join_game(codeInput); // should be the thingy the user typed
-                    gamethread = std::thread(&Game::mainloop, &game);
+                {                
+                    bool success = game.serv.join_game(codeInput); // should be the thingy the user typed
+                    if (success = true)
+                    {
+                        gamethread = std::thread(&Game::mainloop, &game);
+                    }
+                    else
+                    {
+                        menu.CodeStore(game, "Wrong code, please restart");
+                    }
+                    
                 }
                 else if (event.key.code == sf::Keyboard::Backspace && menu.menu_state == JOIN_STATE)
                 {
