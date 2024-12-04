@@ -182,3 +182,12 @@ void Game::wait_select() {
         });
     select_has_selected = false;
 }
+
+void Game::uno_thread()
+{
+    sf::SoundBuffer buffer;
+    if (!buffer.loadFromFile("uno.wav")) {}
+    sf::Sound sound;
+    sound.setBuffer(buffer);
+    sound.play();
+}

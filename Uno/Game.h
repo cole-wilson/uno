@@ -1,6 +1,7 @@
 #pragma once
 #include "Deck.h"
 #include "Server.h"
+#include "SFML/Audio.hpp"
 #include <mutex>
 #include <condition_variable>
 
@@ -38,6 +39,8 @@ public:
 
     void release_select();
     void wait_select();
+
+    void uno_thread();
 
 
 
