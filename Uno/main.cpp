@@ -1,4 +1,4 @@
-#include "Deck.h"
+﻿#include "Deck.h"
 #include "Game.h"
 #include "NumberCard.h"
 #include "ActionCard.h"
@@ -52,6 +52,13 @@ int main() {
     std::thread gamethread;
 
     while (window.isOpen()) {
+        std::cout << game.discardpile.to_string() << std::endl;
+
+        if (game.drawpile.size() == 1) {
+            game.drawpile.clear_from_string(game.discardpile.to_string());
+            game.discardpile.clear_from_string("B0,B0");
+            game.discardpile.put_face_up(game.drawpile.draw_one_card());
+        }
 
         sf::Event event;
         while (window.pollEvent(event))
@@ -208,7 +215,8 @@ int main() {
         else {
             std::string oplayer_text;
             for (int i = 0; i < game.n_players; i++) {
-                oplayer_text += "Player " + std::to_string(i) + ": " + std::to_string(game.n_cards[i]) + " cards\n";
+                std::string arrow = game.turn == i ? (game.direction == 1 ? ">>> " : "<<< ") : "    ";
+                oplayer_text += arrow + "Player " + std::to_string(i+1) + ": " + std::to_string(game.n_cards[i]) + " cards\n";
             }
             otherplayers.setString(oplayer_text);
             window.draw(otherplayers);
@@ -228,36 +236,36 @@ int main() {
             }
         }
         if (game.mode == SELECTING_CARD || game.mode == WAITING_FOR_OTHER_PLAYERS) {
-            mainmessage.setString("Select a Card To Play:");
+            mainmessage.setString("Select a Card To Play:\n(d to draw)");
             int cardindex = std::max(0, game.handindex);
             Card* selectedcard = game.hand.get_all_cards().at(cardindex);
             selectedcard->setPosition(cardindex * 70, window.getSize().y - 400);
             window.draw(*selectedcard);
         }
-        else if (game.mode == WAITING_FOR_OTHER_PLAYERS) {
-            mainmessage.setString("Waiting for Player " + std::to_string(game.turn) + "...");
+        if (game.mode == WAITING_FOR_OTHER_PLAYERS) {
+            mainmessage.setString("Waiting for Player " + std::to_string(game.turn+1) + "...");
         }
 
         if (game.mode == SELECTING_WILD_COLOR) {
-            mainmessage.setString("Choose Wild Card Color: (arrow keys)");
+            mainmessage.setString("Choose Wild Color: (arrow keys)");
             sf::Color colors[] = { sf::Color::Red, sf::Color::Green, sf::Color::Blue, sf::Color::Yellow };
 
-            sf::RectangleShape m_color(sf::Vector2f(1000, 250));
+            sf::RectangleShape m_color(sf::Vector2f(1000, 400));
             m_color.setFillColor(colors[game.chosen_color]);
-            m_color.setPosition(0, 750);
+            m_color.setPosition(0, 600);
             window.draw(m_color);
 
             if (game.chosen_color > 0) {
-                sf::RectangleShape l_color(sf::Vector2f(20, 250));
+                sf::RectangleShape l_color(sf::Vector2f(20, 400));
                 l_color.setFillColor(colors[game.chosen_color - 1]);
-                l_color.setPosition(0, 750);
+                l_color.setPosition(0, 600);
                 window.draw(l_color);
             }
 
             if (game.chosen_color < 3) {
-                sf::RectangleShape r_color(sf::Vector2f(20, 250));
+                sf::RectangleShape r_color(sf::Vector2f(20, 400));
                 r_color.setFillColor(colors[game.chosen_color + 1]);
-                r_color.setPosition(980, 750);
+                r_color.setPosition(980, 600);
                 window.draw(r_color);
             }
         }

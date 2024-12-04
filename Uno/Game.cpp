@@ -62,7 +62,9 @@ void Game::mainloop() {
             mode = SELECTING_CARD;
             int n_draws = 0;
             while (true) {
+                this->n_cards[0] = hand.size();
                 wait_select();
+                this->n_cards[0] = hand.size();
 
                 Card* potential_card;
 
