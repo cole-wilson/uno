@@ -45,17 +45,6 @@ int main() {
         
     Menu menu(window.getSize().x, window.getSize().y);
 
-    game.discardpile.put_face_up(game.drawpile.draw_one_card());
-
-    for (int pid = 0; pid < game.serv.get_player_id(); pid++) {
-        for (int cardi = 0; cardi < 7; cardi++) {
-            game.drawpile.burn_one_card();
-        }
-    }
-    for (int i = 0; i < 7; i++) {
-        game.hand.put_face_up(game.drawpile.draw_one_card());
-    }
-
     //https://stackoverflow.com/questions/49509687/passing-an-entire-class-as-argument-to-a-thread-c-as-in-c-sharp
     std::thread gamethread;
 
