@@ -30,4 +30,4 @@ cp /Users/cole/Library/Developer/Xcode/DerivedData/Uno-*/Build/Products/Debug/so
 mkdir build/Uno.app/Contents/MacOS/cards
 cp /Users/cole/Library/Developer/Xcode/DerivedData/Uno-*/Build/Products/Debug/cards/*.png build/Uno.app/Contents/MacOS/cards
 
-zip build/Uno_macos_arm64.zip build/Uno.app
+zip build/Uno_macos_arm64.zip -r build/Uno.app
