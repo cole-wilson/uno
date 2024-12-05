@@ -15,7 +15,7 @@ try:
     markdown = open("./README.md").read()
 except FileNotFoundError:
     markdown = open("../README.md").read()
-index_html = open("./index.html").read().replace("{{MARKDOWN}}", markdown2.markdown(markdown))
+index_html = open("./index.html").read().replace("{{MARKDOWN}}", markdown2.markdown(markdown, extras=["tables"]))
 deploy_time = datetime.datetime.now()
 index_html = index_html.replace("TIME", f"last deploy at: {deploy_time.isoformat()}, # games: ACTIVE_GAMES")
 
@@ -92,7 +92,7 @@ class UnoTCPHandler(socketserver.BaseRequestHandler):
                 self.request.sendall(f"{player_index}".encode())
             else: # game doesn't exist
                 self.request.sendall(b"-1")
-        
+
         # from here on out, make sockets non-blocking
         self.request.settimeout(0.1)
 

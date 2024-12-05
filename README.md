@@ -89,14 +89,14 @@ and generates SSL certificates for them as well. The webserver is bound to liste
 Uno socket server is bound to all addresses on TCP `9999`. The code is deployed using GitHub's CI/CD webhook feature, so
 every push to the main branch triggers a redeploy of the server.
 
-![server uml diagram](./server_uml.png)
+![server uml diagram](https://raw.githubusercontent.com/cole-wilson/uno/refs/heads/main/server_uml.png)
 
 ## Class Overview (Polymprphism and Inheritance)
 The [`NumberCard`](./Uno/NumberCard.h)s and [`ActionCard`](./Uno/ActionCard.h)s are use polymorphism and inheritance from
 [`Card`](./Uno/Card.h)s. They each share the same `CARD_COLOR` property, but their behavior varies depending on whether or not
 they are a number card or action card. We can treat them as plain `Card`s in `Deck`s but as their subtypes when we are performing
 actions with them. A UML diagram of the entire Card class structure is shown below:
-![class uml diagram](./class_uml.png)
+![class uml diagram](https://raw.githubusercontent.com/cole-wilson/uno/refs/heads/main/class_uml.png)
 
 ### All Classes and Files
 
