@@ -99,6 +99,7 @@ actions with them. A UML diagram of the entire Card class structure is shown bel
 ![class uml diagram](./class_uml.png)
 
 ### All Classes and Files
+
 | class | source | description |
 |-------|--------|-------------|
 |[`ActionCard.h`](./Uno/ActionCard.h)|[`ActionCard.cpp`](./Uno/ActionCard.cpp)|Derived class of Card for Action Cards.|
