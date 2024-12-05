@@ -13,6 +13,7 @@
 #pragma once
 
 #include <string>
+#include <iostream>
 #include <SFML/Graphics.hpp>
 
 /* store the card color and the corresponding serialization char */

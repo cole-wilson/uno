@@ -31,11 +31,11 @@ and then play that last card to win. You lose if someone else gets rid of all of
 before you do.
 
 ## Code Overview
-The code consists of 3 major parts: the grahics thread, and the game logic thread, and the server, which are detailed
+The code consists of 3 major parts: the graphics thread, and the game logic thread, and the server, which are detailed
 below.
 
 ### Graphics Thread:
-The main SFML thread has to run in the main thread to recieve window events. All of the graphics are housed
+The main SFML thread has to run in the main thread to receive window events. All of the graphics are housed
 within the [`GraphicsMain`](./Uno/GraphicsMain.h) class. This class contains a singleton instance of the [`Game`](./Uno/Game.h)
 class (which is a `friend` of `GraphicsMain`), which essentially shares state between the two threads. To see
 implementation details, view the line comments in [`GraphicsMain.cpp`](./Uno/GraphicsMain.cpp).
@@ -64,8 +64,8 @@ The [`Deck`](./Uno/Deck.h)s and [`Card`](./Uno/Card.h)s are sent using their `to
 into a string for sending over the server. For example, a Deck consisting of a Blue Zero, and a Yellow 2 would look like:
 `B0,Y2`.
 
-To send turn data to other clients, and to recieve it, the [`TurnData`](./Uno/TurnData.h) class is used to serialize the data sent across the
-network. The Turndata consists of the following seperated by a newline `\n`:
+To send turn data to other clients, and to receive it, the [`TurnData`](./Uno/TurnData.h) class is used to serialize the data sent across the
+network. The TurnData consists of the following separated by a newline `\n`:
  - number of cards drawn by the player
  - number of cards in players hand at end of their turn
  - the index of the next player
@@ -80,7 +80,7 @@ web app library, and provides uptime statistics and serves this README file as a
 The second, more complex, part of the server code is an implementation of a threading TCP socket server using
 Python's `socketserver` library. The code listens for incoming new game connections, and stores each game in a dictionary
 mapping of join codes to game data. After the initial setup stage, it echos each message from a client back to
-all other clients with the same join code. *Essentially, the server acts as a relay to splilt messages coming to it
+all other clients with the same join code. *Essentially, the server acts as a relay to split messages coming to it
 across all the other clients.* To see implementation details, view the comments in the file.
 
 The server is packaged within a Docker image (see [`Dockerfile`](./Dockerfile)) and deployed to a [Caprover](https://caprover.com/)
@@ -89,14 +89,19 @@ and generates SSL certificates for them as well. The webserver is bound to liste
 Uno socket server is bound to all addresses on TCP `9999`. The code is deployed using GitHub's CI/CD webhook feature, so
 every push to the main branch triggers a redeploy of the server.
 
-![server uml diagram](https://raw.githubusercontent.com/cole-wilson/uno/refs/heads/main/server_uml.png)
+<a href="https://raw.githubusercontent.com/cole-wilson/uno/refs/heads/main/server_uml.png">
+    <img src="https://raw.githubusercontent.com/cole-wilson/uno/refs/heads/main/server_uml.png" alt="server uml diagram" width="300px">
+</a>
 
 ## Class Overview (Polymprphism and Inheritance)
 The [`NumberCard`](./Uno/NumberCard.h)s and [`ActionCard`](./Uno/ActionCard.h)s are use polymorphism and inheritance from
 [`Card`](./Uno/Card.h)s. They each share the same `CARD_COLOR` property, but their behavior varies depending on whether or not
 they are a number card or action card. We can treat them as plain `Card`s in `Deck`s but as their subtypes when we are performing
 actions with them. A UML diagram of the entire Card class structure is shown below:
-![class uml diagram](https://raw.githubusercontent.com/cole-wilson/uno/refs/heads/main/class_uml.png)
+
+<a href="https://raw.githubusercontent.com/cole-wilson/uno/refs/heads/main/class_uml.png">
+    <img src="https://raw.githubusercontent.com/cole-wilson/uno/refs/heads/main/class_uml.png" alt="class uml diagram" width="300px">
+</a>
 
 ### All Classes and Files
 
@@ -119,16 +124,20 @@ actions with them. A UML diagram of the entire Card class structure is shown bel
 |[`server/`](./server)|[`index.html`](./server/index.html)|Template HTML file for the webserver.|
 |[`sounds/`](./Uno/sounds)|[`*.wav`](./Uno/sounds)|Sound resource files.|
 |[`cards/`](./Uno/cards)|[`*.png`](./Uno/cards)|Card images (see credits below).|
-||[`installforge.ifp`](./installforge.ifp)|InstallForge config file (see below).|
+|packaging|[`installforge.ifp`](./installforge.ifp)|InstallForge config file (see below).|
+|packaging|[`Info.plist`](./Info.plist)|The macOS plist file for the app bundle (see below).|
+|packaging|[`Icon.icns`](./Icon.icns)|The macOS icon file for app bundle.|
+|packaging|[`buildmac.sh`](./buildmac.sh)|The bundling script for macOS (see below).|
 ||[`exelogo.ico`](./exelogo.ico)|Executable icon file (Windows).|
 ||[`helvetica.ttf`](./Uno/helvetica.ttf)|Helvetica font file.|
 ||[`unologo.png`](./Uno/unologo.png)|Uno game logo for menu.|
-
 
 ## Packaging
 The Windows executable installer was created using [InstallForge](https://installforge.net/) using the [`installforge.ifp`](./installforge.ifp)
 configuration file. It shows a license agreement, copies the DLLs, resource files, and executable to `Program Files`, and creates
 shortcuts. (See the [Installation](#Installation) section above for a download of the installer.)
+
+The macOS executable is built using XCode and then bundled using [buildmac.sh](./buildmac.sh) which created the `Uno.app` bundle and zip in `./build`.
 
 ## Image Credits
 The Uno playing card images are taken directly from

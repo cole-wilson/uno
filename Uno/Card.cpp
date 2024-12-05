@@ -36,7 +36,8 @@ void Card::load_texture() {
 		std::string filepath = "cards/" + to_string() + ".png";
 		if (!texture.loadFromFile(filepath))
 		{
-			throw 1;
+            std::cerr << "Card texture error..." << std::endl;
+			throw 1; // break on purpose because this should never happen...
 		}
 		// use the inherited setTexture() from sf::Sprite
 		setTexture(texture);
