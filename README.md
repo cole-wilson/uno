@@ -6,10 +6,12 @@
 ## Overview
 An implementation of server-networked Uno in C++ using SFML.
 
-video here...
+#### [Video Demo:](https://www.youtube.com/watch?v=0Wnnqhm2Nsg)
+[![video thumbnail](https://img.youtube.com/vi/0Wnnqhm2Nsg/0.jpg)](https://www.youtube.com/watch?v=0Wnnqhm2Nsg)
 
 ## Installation
-**Binary**: Download the Windows x64 installer [here](https://github.com/cole-wilson/uno_releases/releases/download/v0.0.2/InstallUNO_x64.exe).
+**Binary**: Download the [latest release](https://github.com/cole-wilson/uno/releases).
+> Please note that Windows Defender flags it as a virus, so please whitelist this executable.
 
 **Source**: `git clone https://github.com/cole-wilson/uno`
 
@@ -89,15 +91,40 @@ and generates SSL certificates for them as well. The webserver is bound to liste
 Uno socket server is bound to all addresses on TCP `9999`. The code is deployed using GitHub's CI/CD webhook feature, so
 every push to the main branch triggers a redeploy of the server.
 
-UML server diagram...
+![server uml diagram](./server_uml.png)
 
-## Class Overview
+## Class Overview (Polymprphism and Inheritance)
 The [`NumberCard`](./Uno/NumberCard.h)s and [`ActionCard`](./Uno/ActionCardds.h)s are use polymorphism and inheritance from
 [`Card`](./Uno/Card.h)s. They each share the same `CARD_COLOR` property, but their behavior varies depending on whether or not
 they are a number card or action card. We can treat them as plain `Card`s in `Deck`s but as their subtypes when we are performing
-actions with them. A UML diagram of the entire class structure is shown below:
+actions with them. A UML diagram of the entire Card class structure is shown below:
+![class uml diagram](./class_uml.png)
 
-UML DIAGRAM...
+### All Classes and Files
+| class | source | description |
+|-------|--------|-------------|
+|[`ActionCard.h`](./Uno/ActionCards.h)|[`ActionCard.cpp`](./Uno/ActionCard.cpp)|Derived class of Card for Action Cards.|
+|[`Card.h`](./Uno/Card.h)|[`Card.cpp`](./Uno/Card.cpp)|Class inheriting from `sf::Sprite` acting as a base class for Number and Action cards.|
+|[`Deck.h`](./Uno/Deck.h)|[`Deck.cpp`](./Uno/Deck.cpp)|Wrapper of the STL `std::deque` class to contain a series of `Card*` objects for draw pile, discard pile, or the player's hand.|
+|[`Game.h`](./Uno/Game.h)|[`Game.cpp`](./Uno/Game.cpp)|The main game logic thread that handles blocking communication and turn logic. Uses threading and locks to communicate with `GraphicsMain`.|
+|[`GraphicsMain.h`](./Uno/GraphicsMain.h)|[`GraphicsMain.cpp`](./Uno/GraphicsMain.cpp)|The main graphics thread handling the window event loop and drawing all objects and sprites on the screen. Interacts with `Game::mainloop` thread.|
+|[`Menu.h`](./Uno/Menu.h)|[`Menu.cpp`](./Uno/Menu.cpp)|Graphics class for drawing the join/host/exit menu and handling join code input.|
+|[`NumberCard.h`](./Uno/NumberCard.h)|[`NumberCard.cpp`](./Uno/NumberCard.cpp)|Derived class of Card for Number Cards.|
+|[`Server.h`](./Uno/Server.h)|[`Server.cpp`](./Uno/Server.cpp)|Handles interactions with the server through `sf::Socket`.|
+|[`SoundPlayer.h`](./Uno/SoundPlayer.h)|[`SoundPlayer.cpp`](./Uno/SoundPlayer.cpp)|Wrapper for `sf::Sound` and sound buffer reading from filename.|
+|[`TestCases.h`](./Uno/TestCases.h)|[`TestCases.cpp`](./Uno/TestCases.cpp)|5 test cases for common operations.|
+|[`TurnData.h`](./Uno/TurnData.h)|[`TurnData.cpp`](./Uno/TurnData.cpp)|Class for serializing and deserializing turn data and game state.|
+||[`main.cpp`](./Uno/main.cpp)|Main entrypoint for the program.|
+|[`server/`](./server)|[`Dockerfile`](./Dockerfile)|The Dockerfile for running the server code on a hosted Caprover instance.|
+|[`server/`](./server)|[`main.py`](./server/main.py)|The main server entrypoint for all server code.|
+|[`server/`](./server)|[`index.html`](./server/index.html)|Template HTML file for the webserver.|
+|[`sounds/`](./sounds)|[`*.wav`](./sounds)|Sound resource files.|
+|[`cards/`](./cards)|[`*.png`](./cards)|Card images (see credits below).|
+||[`installforge.ifp`](./installforge.ifp)|InstallForge config file (see below).|
+||[`exelogo.ico`](./exelogo.ico)|Executable icon file (Windows).|
+||[`helvetica.ttf`](./helvetica.ttf)|Helvetica font file.|
+||[`unologo.png`](./unologo.png)|Uno game logo for menu.|
+
 
 ## Packaging
 The Windows executable installer was created using [InstallForge](https://installforge.net/) using the [`installforge.ifp`](./installforge.ifp)

@@ -234,6 +234,7 @@
     <Image Include="cards\Yr.png" />
     <Image Include="cards\Ys.png" />
     <Image Include="cards\Yw.png" />
+    <Image Include="server_uml.png" />
     <Image Include="unologo.png" />
   </ItemGroup>
   <ItemGroup>

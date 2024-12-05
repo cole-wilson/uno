@@ -317,6 +317,9 @@
     <Image Include="..\exelogo.ico">
       <Filter>Resource Files\Resources</Filter>
     </Image>
+    <Image Include="server_uml.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Media Include="sounds\card.wav">
