@@ -137,7 +137,7 @@ The Windows executable installer was created using [InstallForge](https://instal
 configuration file. It shows a license agreement, copies the DLLs, resource files, and executable to `Program Files`, and creates
 shortcuts. (See the [Installation](#Installation) section above for a download of the installer.)
 
-The macOS executable is built using XCode and then bundled using [buildmac.sh](./buildmac.sh) which created the `Uno.app` bundle and zip in `./build`.
+The macOS executable is built using XCode and then bundled using [`buildmac.sh`](./buildmac.sh) which created the `Uno.app` bundle and zip in `./build`.
 
 ## Image Credits
 The Uno playing card images are taken directly from
