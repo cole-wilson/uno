@@ -124,10 +124,10 @@ actions with them. A UML diagram of the entire Card class structure is shown bel
 |[`server/`](./server)|[`index.html`](./server/index.html)|Template HTML file for the webserver.|
 |[`sounds/`](./Uno/sounds)|[`*.wav`](./Uno/sounds)|Sound resource files.|
 |[`cards/`](./Uno/cards)|[`*.png`](./Uno/cards)|Card images (see credits below).|
-|packaging|[`installforge.ifp`](./installforge.ifp)|InstallForge config file (see below).|
-|packaging|[`Info.plist`](./Info.plist)|The macOS plist file for the app bundle (see below).|
-|packaging|[`Icon.icns`](./Icon.icns)|The macOS icon file for app bundle.|
-|packaging|[`buildmac.sh`](./buildmac.sh)|The bundling script for macOS (see below).|
+||[`installforge.ifp`](./installforge.ifp)|InstallForge config file (see below).|
+||[`Info.plist`](./Info.plist)|The macOS plist file for the app bundle (see below).|
+||[`Icon.icns`](./Icon.icns)|The macOS icon file for app bundle.|
+||[`buildmac.sh`](./buildmac.sh)|The bundling script for macOS (see below).|
 ||[`exelogo.ico`](./exelogo.ico)|Executable icon file (Windows).|
 ||[`helvetica.ttf`](./Uno/helvetica.ttf)|Helvetica font file.|
 ||[`unologo.png`](./Uno/unologo.png)|Uno game logo for menu.|
